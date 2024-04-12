@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import { Button } from '@nextui-org/button';
+import Box from "../../utils/Box/Box";
 
 type FormValues = {
     username: string;
@@ -38,38 +39,43 @@ function RegistrationForm() {
         console.log(data);
     };
     return (
-        <form onSubmit={handleSubmit(submitLogin)}>
-            <InputFormText
-                register={register}
-                name={'username'}
-                type={'text'}
-                label={'Username'}
-                errorMessage={errors.username?.message}
-            />
+        <Box>
+            <form
+                className={'flex flex-col gap-2 p-4'}
+                onSubmit={handleSubmit(submitLogin)}
+            >
+                <InputFormText
+                    register={register}
+                    name={'username'}
+                    type={'text'}
+                    label={'Username'}
+                    errorMessage={errors.username?.message}
+                />
 
-            <InputFormText
-                register={register}
-                name={'email'}
-                type={'text'}
-                label={'Email'}
-                errorMessage={errors.email?.message}
-            />
-            <InputFormText
-                name={'password'}
-                register={register}
-                type={'password'}
-                label={'Password'}
-                errorMessage={errors.password?.message}
-            />
-            <InputFormText
-                name={'confirmPassword'}
-                register={register}
-                type={'password'}
-                label={'Password'}
-                errorMessage={errors.confirmPassword?.message}
-            />
-            <Button type={'submit'}>Submit</Button>
-        </form>
+                <InputFormText
+                    register={register}
+                    name={'email'}
+                    type={'text'}
+                    label={'Email'}
+                    errorMessage={errors.email?.message}
+                />
+                <InputFormText
+                    name={'password'}
+                    register={register}
+                    type={'password'}
+                    label={'Password'}
+                    errorMessage={errors.password?.message}
+                />
+                <InputFormText
+                    name={'confirmPassword'}
+                    register={register}
+                    type={'password'}
+                    label={'Password'}
+                    errorMessage={errors.confirmPassword?.message}
+                />
+                <Button type={'submit'}>Submit</Button>
+            </form>
+        </Box>
     );
 }
 
