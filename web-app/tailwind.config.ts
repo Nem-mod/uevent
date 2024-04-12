@@ -10,8 +10,13 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            backgroundImage: {},
-        },
+            colors: {
+                primary: "#C3ACD0",
+                accent: "#7743DB",
+                secondary: "#F7EFE5",
+                light: "#FFFBF5"
+            }
+        }
     },
     darkMode: 'class',
     plugins: [nextui()],
