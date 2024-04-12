@@ -8,7 +8,7 @@ interface CardTypes {
     address: string,
     img?: string
 }
-const EventCard = ({title, start, price, tag, address}: CardTypes) => {
+function EventCard({title, start, price, tag, address}: CardTypes) {
     return (
         <div className={'flex flex-row border rounded-md border-primary'}>
             <img src="" alt="This is an image"/>
@@ -37,6 +37,6 @@ const EventCard = ({title, start, price, tag, address}: CardTypes) => {
             </div>
         </div>
     );
-};
+}
 
 export default EventCard;

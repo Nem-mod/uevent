@@ -39,43 +39,124 @@ function RegistrationForm() {
         console.log(data);
     };
     return (
-        <Box>
-            <form
-                className={'flex flex-col gap-2 p-4'}
-                onSubmit={handleSubmit(submitLogin)}
-            >
-                <InputFormText
-                    register={register}
-                    name={'username'}
-                    type={'text'}
-                    label={'Username'}
-                    errorMessage={errors.username?.message}
-                />
+        <form
+            className={'flex flex-col gap-4 p-4 bg-transparent w-3/5'}
+            onSubmit={handleSubmit(submitLogin)}
+        >
+            <InputFormText
+                classNames={{
+                    input: [
+                        'bg-transparent',
+                    ],
+                    label: [
+                        'text-accent'
+                    ],
+                    mainWrapper: [
+                        'bg-secondary',
+                        // 'hover:bg-primary'
+                    ],
+                    innerWrapper: [
+                        // 'hover:bg-primary'
+                    ],
+                    inputWrapper: [
+                        // 'hover:bg-accent',
+                        // 'dark:hover:bg-accent',
+                        "group-data-[focused=true]:bg-primary"
+                    ]
+                }}
+                register={register}
+                name={'username'}
+                type={'text'}
+                label={'Username'}
+                errorMessage={errors.username?.message}
+            />
 
-                <InputFormText
-                    register={register}
-                    name={'email'}
-                    type={'text'}
-                    label={'Email'}
-                    errorMessage={errors.email?.message}
-                />
-                <InputFormText
-                    name={'password'}
-                    register={register}
-                    type={'password'}
-                    label={'Password'}
-                    errorMessage={errors.password?.message}
-                />
-                <InputFormText
-                    name={'confirmPassword'}
-                    register={register}
-                    type={'password'}
-                    label={'Password'}
-                    errorMessage={errors.confirmPassword?.message}
-                />
-                <Button type={'submit'}>Submit</Button>
-            </form>
-        </Box>
+            <InputFormText
+                classNames={{
+                    input: [
+                        'bg-transparent',
+                    ],
+                    label: [
+                        'text-accent'
+                    ],
+                    mainWrapper: [
+                        'bg-secondary',
+                        // 'hover:bg-primary'
+                    ],
+                    innerWrapper: [
+                        // 'hover:bg-primary'
+                    ],
+                    inputWrapper: [
+                        'hover:bg-accent',
+                        'dark:hover:bg-accent'
+                    ]
+                }}
+                register={register}
+                name={'email'}
+                type={'text'}
+                label={'Email'}
+                errorMessage={errors.email?.message}
+            />
+            <InputFormText
+                classNames={{
+                    input: [
+                        'bg-transparent',
+                    ],
+                    label: [
+                        'text-accent'
+                    ],
+                    mainWrapper: [
+                        'bg-secondary',
+                        // 'hover:bg-primary'
+                    ],
+                    innerWrapper: [
+                        // 'hover:bg-primary'
+                    ],
+                    inputWrapper: [
+                        'hover:bg-accent',
+                        'dark:hover:bg-accent'
+                    ]
+                }}
+                name={'password'}
+                register={register}
+                type={'password'}
+                label={'Password'}
+                errorMessage={errors.password?.message}
+            />
+            <InputFormText
+                classNames={{
+                    input: [
+                        'bg-transparent',
+                    ],
+                    label: [
+                        'text-accent',
+                        'focus:text-accent'
+                    ],
+                    mainWrapper: [
+                        'bg-secondary',
+                        // 'hover:bg-primary'
+                    ],
+                    innerWrapper: [
+                        // 'hover:bg-primary'
+                    ],
+                    inputWrapper: [
+                        'hover:bg-accent',
+                        'dark:hover:bg-accent'
+                    ]
+                }}
+                name={'confirmPassword'}
+                register={register}
+                type={'password'}
+                label={'Password'}
+                errorMessage={errors.confirmPassword?.message}
+            />
+            <Button
+                type={'submit'}
+                className={'mt-4 bg-secondary text-black border-primary border hover:bg-primary hover:font-semibold'}
+            >
+                Submit
+            </Button>
+        </form>
     );
 }
 

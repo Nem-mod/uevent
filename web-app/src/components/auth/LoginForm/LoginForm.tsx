@@ -30,25 +30,23 @@ function LoginForm() {
         console.log(data);
     };
     return (
-        <Box>
-            <form onSubmit={handleSubmit(submitLogin)}>
-                <InputFormText
-                    register={register}
-                    name={'email'}
-                    type={'text'}
-                    label={'Email'}
-                    errorMessage={errors.email?.message}
-                />
-                <InputFormText
-                    name={'password'}
-                    register={register}
-                    type={'password'}
-                    label={'Password'}
-                    errorMessage={errors.password?.message}
-                />
-                <Button type={'submit'}>Submit</Button>
-            </form>
-        </Box>
+        <form onSubmit={handleSubmit(submitLogin)}>
+            <InputFormText
+                register={register}
+                name={'email'}
+                type={'text'}
+                label={'Email'}
+                errorMessage={errors.email?.message}
+            />
+            <InputFormText
+                name={'password'}
+                register={register}
+                type={'password'}
+                label={'Password'}
+                errorMessage={errors.password?.message}
+            />
+            <Button type={'submit'}>Submit</Button>
+        </form>
     );
 }
 
