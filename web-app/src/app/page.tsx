@@ -4,7 +4,7 @@ import {Card, CardBody, CardHeader, Link, Image} from "@nextui-org/react";
 
 export default function Home() {
     return (
-        <main className="">
+        <div className={'h-full'}>
             <div className={'w-full h-unit-9xl' }>
                 <Slider/>
             </div>
@@ -35,6 +35,6 @@ export default function Home() {
                     <Button as={Link} href={"/events"} className={"w-52 h-12 text-xl bg-accent text-white"}>All Events</Button>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
