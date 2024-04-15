@@ -40,30 +40,13 @@ function RegistrationForm() {
     };
     return (
         <form
-            className={'flex flex-col gap-4 p-4 bg-transparent w-3/5'}
+            className={'flex flex-col gap-4 p-4 bg-transparent w-fill justify-center items-center [&>*]:shadow-sm'}
             onSubmit={handleSubmit(submitLogin)}
         >
+            <h1 className={'text-black text-3xl font-bold'}>Registration lmao</h1>
+
             <InputFormText
-                classNames={{
-                    input: [
-                        'bg-transparent',
-                    ],
-                    label: [
-                        'text-accent'
-                    ],
-                    mainWrapper: [
-                        'bg-secondary',
-                        // 'hover:bg-primary'
-                    ],
-                    innerWrapper: [
-                        // 'hover:bg-primary'
-                    ],
-                    inputWrapper: [
-                        // 'hover:bg-accent',
-                        // 'dark:hover:bg-accent',
-                        "group-data-[focused=true]:bg-primary"
-                    ]
-                }}
+
                 register={register}
                 name={'username'}
                 type={'text'}
@@ -72,25 +55,7 @@ function RegistrationForm() {
             />
 
             <InputFormText
-                classNames={{
-                    input: [
-                        'bg-transparent',
-                    ],
-                    label: [
-                        'text-accent'
-                    ],
-                    mainWrapper: [
-                        'bg-secondary',
-                        // 'hover:bg-primary'
-                    ],
-                    innerWrapper: [
-                        // 'hover:bg-primary'
-                    ],
-                    inputWrapper: [
-                        'hover:bg-accent',
-                        'dark:hover:bg-accent'
-                    ]
-                }}
+
                 register={register}
                 name={'email'}
                 type={'text'}
@@ -98,25 +63,6 @@ function RegistrationForm() {
                 errorMessage={errors.email?.message}
             />
             <InputFormText
-                classNames={{
-                    input: [
-                        'bg-transparent',
-                    ],
-                    label: [
-                        'text-accent'
-                    ],
-                    mainWrapper: [
-                        'bg-secondary',
-                        // 'hover:bg-primary'
-                    ],
-                    innerWrapper: [
-                        // 'hover:bg-primary'
-                    ],
-                    inputWrapper: [
-                        'hover:bg-accent',
-                        'dark:hover:bg-accent'
-                    ]
-                }}
                 name={'password'}
                 register={register}
                 type={'password'}
@@ -124,26 +70,7 @@ function RegistrationForm() {
                 errorMessage={errors.password?.message}
             />
             <InputFormText
-                classNames={{
-                    input: [
-                        'bg-transparent',
-                    ],
-                    label: [
-                        'text-accent',
-                        'focus:text-accent'
-                    ],
-                    mainWrapper: [
-                        'bg-secondary',
-                        // 'hover:bg-primary'
-                    ],
-                    innerWrapper: [
-                        // 'hover:bg-primary'
-                    ],
-                    inputWrapper: [
-                        'hover:bg-accent',
-                        'dark:hover:bg-accent'
-                    ]
-                }}
+
                 name={'confirmPassword'}
                 register={register}
                 type={'password'}
@@ -152,9 +79,12 @@ function RegistrationForm() {
             />
             <Button
                 type={'submit'}
-                className={'mt-4 bg-secondary text-black border-primary border hover:bg-primary hover:font-semibold'}
+                className={
+                    'mt-4 bg-accent h-12 text-white border-primary border hover:bg-accent ' +
+                    'hover:border-accent text-lg font-semibold w-3/5 hover:text-white'
+                }
             >
-                Submit
+                Sign Up
             </Button>
         </form>
     );
