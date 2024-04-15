@@ -27,17 +27,19 @@ const icons = {
 };
 
 export function CustomNavBar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [_, setIsMenuOpen] = useState(false);
     return (
+
         <Navbar  className={'bg-accent'}
                  shouldHideOnScroll={true}
                  onMenuOpenChange={setIsMenuOpen}
                  isBordered
+                 maxWidth={'xl'}
         >
-            <NavbarContent >
+            <NavbarContent>
                 <NavbarMenuToggle className={'sm:hidden'} />
                 <NavbarBrand>
-                    <Link href={'/'} className="font-bold text-inherit">CUMEVENT</Link>
+                    <Link href={'/'} className="font-bold text-inherit text-white">CUMEVENT</Link>
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -126,10 +128,10 @@ export function CustomNavBar() {
                     />
                 </NavbarItem>
                 <NavbarItem className="hidden lg:flex">
-                    <Link href="/signin" className={'text-secondary'}>Login</Link>
+                    <Link href={"/signin"} className={'text-secondary'}>Login</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} className={'hover:text-white'} color="primary" href="signup" variant="flat">
+                    <Button as={Link} className={'hover:text-white'} color="primary" href="/signup" variant="flat">
                         Sign Up
                     </Button>
                 </NavbarItem>
