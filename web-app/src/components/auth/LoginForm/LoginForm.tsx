@@ -34,6 +34,8 @@ function LoginForm() {
             onSubmit={handleSubmit(submitLogin)}
             className={'flex flex-col gap-4 p-4 bg-transparent w-fill justify-center items-center [&>*]:shadow-sm'}
         >
+            <h1 className={'text-black text-3xl font-bold'}> Sign in bitch</h1>
+
             <InputFormText
                 register={register}
                 name={'email'}

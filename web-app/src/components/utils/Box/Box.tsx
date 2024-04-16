@@ -10,7 +10,7 @@ interface PropTypes {
 function Box({children, className}: PropTypes) {
     return (
         <div
-            className={className + " " + `border rounded-md bg-white p-4 gap-6 shadow-xl`}
+            className={`border rounded-md bg-white p-4 gap-6 shadow-xl` + ' ' + className}
         >
             {children}
         </div>

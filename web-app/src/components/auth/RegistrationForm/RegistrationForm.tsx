@@ -74,7 +74,7 @@ function RegistrationForm() {
                 name={'confirmPassword'}
                 register={register}
                 type={'password'}
-                label={'Password'}
+                label={'Repeat Password'}
                 errorMessage={errors.confirmPassword?.message}
             />
             <Button

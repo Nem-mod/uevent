@@ -1,6 +1,7 @@
 import Slider from "@/components/core/Slider/Slider";
 import {Button} from "@nextui-org/button";
 import {Card, CardBody, CardHeader, Link, Image} from "@nextui-org/react";
+import EventCard from "@/components/core/EventCard/EventCard";
 
 export default function Home() {
     return (
@@ -29,6 +30,7 @@ export default function Home() {
                             </CardBody>
                         </Card>
                     ))}
+                    <EventCard title={'Funky event'} start={new Date()} price={'400'} tag={'Bitch nigga'} address={'221B Baker St.'} img={'https://img.ticketsbox.com/cache/0x0/data/!!!!/duna.jpg_.webp'}/>
 
                 </div>
                 <div className={'mt-12 w-full grid place-items-center'}>

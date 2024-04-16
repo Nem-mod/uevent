@@ -8,11 +8,13 @@ interface CardTypes {
     address: string,
     img?: string
 }
-function EventCard({title, start, price, tag, address}: CardTypes) {
+function EventCard({title, start, price, tag, address, img}: CardTypes) {
     return (
-        <div className={'flex flex-row border rounded-md border-primary'}>
-            <img src="" alt="This is an image"/>
-            <div className={'flex flex-col py-2 px-4 gap-4 bg-secondary'}>
+        <div className={'flex flex-row border-2 rounded-xl border-gray/70 shadow-xl w-xl'}>
+            <div className={'max-w-unit-40'}>
+                <img className={'rounded-l-lg'} src={img} alt="This is an image"/>
+            </div>
+            <div className={'flex flex-col py-2 px-4 gap-4 bg-transparent pl-8 pr-20'}>
                 <div className={'flex flex-col gap-2'}>
                     <span className={'text-black text-m font-semibold'}>
                         {start.toDateString()}

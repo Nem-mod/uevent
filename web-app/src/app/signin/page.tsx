@@ -12,7 +12,7 @@ function Page() {
                 <div className={'flex-grow basis-1/2'}>
                     <h1 className={'text-black text-xl font-bold'}>Now you have</h1>
                     <p className={'text-black'}>
-                        No bitches lmao Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam aut delectus dignissimos eligendi eveniet exercitationem harum illum in iusto, minus molestiae necessitatibus odio quis, repellat sint unde ut, vitae!
+                        No bitches lmao
                     </p>
                 </div>
             </div>
