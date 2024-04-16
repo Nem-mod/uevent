@@ -1,8 +1,21 @@
-import React from 'react';
+import EventSearchForm from "@/components/core/EventSearchForm/EventSearchForm";
 
-function Page() {
+interface Props {
+    params? : any
+    searchParams?: {
+        data: string[] | string,
+        format: string[] | string
+    }
+}
+function Page({params, searchParams}: Props ) {
     return (
-        <div>Events</div>
+        <div className={'pt-12 max-w-screen-xl m-auto text-black'}>
+            <h1 className={'text-6xl'}>Tickets</h1>
+            <EventSearchForm className={'mt-10'}/>
+            {JSON.stringify(params)}
+            {JSON.stringify(searchParams)}
+
+        </div>
     );
 }
 
