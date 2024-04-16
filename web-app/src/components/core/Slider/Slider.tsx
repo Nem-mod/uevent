@@ -5,7 +5,7 @@ import "swiper/css"
 import 'swiper/css/thumbs';
 import "swiper/css/pagination";
 
-import {Pagination} from 'swiper/modules';
+import {Pagination, Autoplay} from 'swiper/modules';
 
 const contentArray = [
     {
@@ -36,18 +36,20 @@ function Slider() {
                 spaceBetween={0}
                 slidesPerView={1}
                 loop={true}
+                autoplay={{
+                    delay: 3500,
+                    disableOnInteraction: false
+                }}
                 scrollbar={{draggable: true}}
-                // onSlideChange={() => console.log('slide change')}
-                // onSwiper={(swiper) => console.log(swiper)}
                 pagination={{
                     dynamicBullets: true,
                 }}
-                modules={[Pagination]}
+                modules={[Pagination, Autoplay]}
                 className={'h-full'}
             >
                 {contentArray && contentArray.map((e) => {
                     return (
-                        <SwiperSlide className={`bg-primary h-screen`}>
+                        <SwiperSlide key={e.start_time.getTime()} className={`bg-primary h-screen`}>
                             <div
                                 className={'h-full grid place-items-center'}
                                 style={{
