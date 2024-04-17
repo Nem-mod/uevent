@@ -31,7 +31,30 @@ function InputFormText({
             errorMessage={errorMessage}
             size={'lg'}
             radius={'sm'}
+            variant={'flat'}
             {...props}
+            classNames={{
+                input: [
+                    // 'bg-transparent',
+                    'text-black'
+                ],
+                label: [
+                    'text-accent'
+                ],
+                mainWrapper: [
+                    // 'bg-primary',
+                    // 'hover:bg-primary'
+                    'hover:bg-primary/40'
+                ],
+                innerWrapper: [
+                    // 'hover:bg-primary'
+                ],
+                inputWrapper: [
+                    // 'hover:bg-accent',
+                    // 'dark:hover:bg-accent',
+                    // "group-data-[focused=true]:bg-primary"
+                ]
+            }}
         />
     );
 }

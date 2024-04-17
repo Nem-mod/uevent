@@ -30,7 +30,12 @@ function LoginForm() {
         console.log(data);
     };
     return (
-        <form onSubmit={handleSubmit(submitLogin)}>
+        <form
+            onSubmit={handleSubmit(submitLogin)}
+            className={'flex flex-col gap-4 p-4 bg-transparent w-fill justify-center items-center [&>*]:shadow-sm'}
+        >
+            <h1 className={'text-black text-3xl font-bold'}> Sign in bitch</h1>
+
             <InputFormText
                 register={register}
                 name={'email'}
@@ -45,7 +50,15 @@ function LoginForm() {
                 label={'Password'}
                 errorMessage={errors.password?.message}
             />
-            <Button type={'submit'}>Submit</Button>
+            <Button
+                type={'submit'}
+                className={
+                    'mt-4 bg-accent h-12 text-white border-primary border hover:bg-accent ' +
+                    'hover:border-accent text-lg font-semibold w-3/5 hover:text-white'
+                }
+            >
+                Submit
+            </Button>
         </form>
     );
 }
