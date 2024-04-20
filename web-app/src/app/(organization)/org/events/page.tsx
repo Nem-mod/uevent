@@ -1,8 +1,9 @@
 'use client'
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination} from "@nextui-org/react";
+import {useState} from "react";
 
 function Page() {
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = useState(1);
 
     const pages = 12
 
