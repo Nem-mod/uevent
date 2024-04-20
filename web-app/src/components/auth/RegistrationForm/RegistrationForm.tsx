@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import { Button } from '@nextui-org/button';
-import Box from "../../utils/Box/Box";
 
 type FormValues = {
     username: string;
@@ -40,13 +39,14 @@ function RegistrationForm() {
     };
     return (
         <form
-            className={'flex flex-col gap-4 p-4 bg-transparent w-fill justify-center items-center [&>*]:shadow-sm'}
+            className={
+                'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
+            }
             onSubmit={handleSubmit(submitLogin)}
         >
-            <h1 className={'text-black text-3xl font-bold'}>Registration lmao</h1>
+            <h1 className={'text-3xl font-bold text-black'}>Registration lmao</h1>
 
             <InputFormText
-
                 register={register}
                 name={'username'}
                 type={'text'}
@@ -55,7 +55,6 @@ function RegistrationForm() {
             />
 
             <InputFormText
-
                 register={register}
                 name={'email'}
                 type={'text'}
@@ -70,7 +69,6 @@ function RegistrationForm() {
                 errorMessage={errors.password?.message}
             />
             <InputFormText
-
                 name={'confirmPassword'}
                 register={register}
                 type={'password'}
@@ -80,8 +78,8 @@ function RegistrationForm() {
             <Button
                 type={'submit'}
                 className={
-                    'mt-4 bg-accent h-12 text-white border-primary border hover:bg-accent ' +
-                    'hover:border-accent text-lg font-semibold w-3/5 hover:text-white'
+                    'mt-4 h-12 border border-primary bg-accent text-white hover:bg-accent ' +
+                    'w-3/5 text-lg font-semibold hover:border-accent hover:text-white'
                 }
             >
                 Sign Up

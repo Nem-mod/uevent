@@ -1,40 +1,32 @@
 import React from 'react';
 
 interface CardTypes {
-    title: string,
-    start: Date,
-    price: string,
-    tag: string,
-    address: string,
-    img?: string
+    title: string;
+    start: Date;
+    price: string;
+    tag: string;
+    address: string;
+    img?: string;
 }
-function EventCard({title, start, price, tag, address, img}: CardTypes) {
+function EventCard({ title, start, price, tag, address, img }: CardTypes) {
     return (
-        <div className={'flex flex-row border-2 rounded-xl border-gray/70 shadow-xl w-xl'}>
+        <div className={'border-gray/70 w-xl flex flex-row rounded-xl border-2 shadow-xl'}>
             <div className={'max-w-unit-40'}>
-                <img className={'rounded-l-lg'} src={img} alt="This is an image"/>
+                <img className={'rounded-l-lg'} src={img} alt="This is an image" />
             </div>
-            <div className={'flex flex-col py-2 px-4 gap-4 bg-transparent pl-8 pr-20'}>
+            <div className={'flex flex-col gap-4 bg-transparent px-4 py-2 pl-8 pr-20'}>
                 <div className={'flex flex-col gap-2'}>
-                    <span className={'text-black text-m font-semibold'}>
+                    <span className={'text-m font-semibold text-black'}>
                         {start.toDateString()}
                     </span>
-                    <span className={'text-gray-500 text-m'}>
-                        {tag}
-                    </span>
+                    <span className={'text-m text-gray-500'}>{tag}</span>
                 </div>
-                <div className={'flex flex-col my-2'}>
-                    <span className={'text-l text-black font-bold'}>
-                        {title}
-                    </span>
+                <div className={'my-2 flex flex-col'}>
+                    <span className={'text-l font-bold text-black'}>{title}</span>
                 </div>
                 <div className={'flex flex-col gap-2'}>
-                    <span className={'text-gray-500 text-m'}>
-                        {address}
-                    </span>
-                    <span className={'text-gray-500 text-m'}>
-                        {price}
-                    </span>
+                    <span className={'text-m text-gray-500'}>{address}</span>
+                    <span className={'text-m text-gray-500'}>{price}</span>
                 </div>
             </div>
         </div>

@@ -1,17 +1,15 @@
-'use client'
+'use client';
 
-import React from "react";
+import React from 'react';
 
 interface PropTypes {
-    children?: React.ReactNode,
-    className?: string
+    children?: React.ReactNode;
+    className?: string;
 }
 
-function Box({children, className}: PropTypes) {
+function Box({ children, className }: PropTypes) {
     return (
-        <div
-            className={`border rounded-md bg-white p-4 gap-6 shadow-xl` + ' ' + className}
-        >
+        <div className={`gap-6 rounded-md border bg-white p-4 shadow-xl` + ' ' + className}>
             {children}
         </div>
     );

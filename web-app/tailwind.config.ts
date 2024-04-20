@@ -11,22 +11,25 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                primary: "#C3ACD0",
-                accent: "#7743DB",
-                secondary: "#F7EFE5",
-                light: "#FFFBF5"
-            }
-        }
+                primary: '#BB7EFF',
+                accent: '#7743DB',
+                accentSecond: '#9960FC',
+                secondary: '#DD9DFF',
+                light: '#FFBDFF',
+            },
+        },
     },
     darkMode: 'class',
-    plugins: [nextui({
-        themes: {
-            light: {
-                colors: {
-                    primary: "#C3ACD0"
-                }
-            }
-        }
-    })],
+    plugins: [
+        nextui({
+            themes: {
+                light: {
+                    colors: {
+                        primary: '#C3ACD0',
+                    },
+                },
+            },
+        }),
+    ],
 };
 export default config;
