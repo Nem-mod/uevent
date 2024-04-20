@@ -32,9 +32,11 @@ function LoginForm() {
     return (
         <form
             onSubmit={handleSubmit(submitLogin)}
-            className={'flex flex-col gap-4 p-4 bg-transparent w-fill justify-center items-center [&>*]:shadow-sm'}
+            className={
+                'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
+            }
         >
-            <h1 className={'text-black text-3xl font-bold'}> Sign in bitch</h1>
+            <h1 className={'text-3xl font-bold text-black'}> Sign in bitch</h1>
 
             <InputFormText
                 register={register}
@@ -53,8 +55,8 @@ function LoginForm() {
             <Button
                 type={'submit'}
                 className={
-                    'mt-4 bg-accent h-12 text-white border-primary border hover:bg-accent ' +
-                    'hover:border-accent text-lg font-semibold w-3/5 hover:text-white'
+                    'mt-4 h-12 border border-primary bg-accent text-white hover:bg-accent ' +
+                    'w-3/5 text-lg font-semibold hover:border-accent hover:text-white'
                 }
             >
                 Submit

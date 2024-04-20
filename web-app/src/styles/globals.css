@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 :root {
     --foreground-rgb: 255, 251, 245;
 }
@@ -26,8 +24,6 @@ body {
     }
 }
 
-
-
 :root {
-    --swiper-pagination-color: #ffff
+    --swiper-pagination-color: #ffff;
 }

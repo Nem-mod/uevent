@@ -36,15 +36,13 @@ function InputFormText({
             classNames={{
                 input: [
                     // 'bg-transparent',
-                    'text-black'
+                    'text-black',
                 ],
-                label: [
-                    'text-accent'
-                ],
+                label: ['text-accent'],
                 mainWrapper: [
                     // 'bg-primary',
                     // 'hover:bg-primary'
-                    'hover:bg-primary/40'
+                    'hover:bg-primary/40',
                 ],
                 innerWrapper: [
                     // 'hover:bg-primary'
@@ -53,7 +51,7 @@ function InputFormText({
                     // 'hover:bg-accent',
                     // 'dark:hover:bg-accent',
                     // "group-data-[focused=true]:bg-primary"
-                ]
+                ],
             }}
         />
     );

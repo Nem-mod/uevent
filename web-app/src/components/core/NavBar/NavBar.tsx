@@ -1,6 +1,7 @@
-"use client"
+'use client';
 import {
-    DropdownItem, DropdownMenu,
+    DropdownItem,
+    DropdownMenu,
     Link,
     Navbar,
     NavbarBrand,
@@ -8,13 +9,22 @@ import {
     NavbarItem,
     NavbarMenu,
     NavbarMenuItem,
-    NavbarMenuToggle
-} from "@nextui-org/react";
-import {Button} from "@nextui-org/button";
-import {useState} from "react";
-import {Input} from "@nextui-org/input";
-import {SearchIcon, TagUser, Server, Flash, Activity, Lock, Scale, ChevronDown} from "@nextui-org/shared-icons";
-import {Dropdown, DropdownTrigger} from "@nextui-org/dropdown";
+    NavbarMenuToggle,
+} from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
+import { useState } from 'react';
+import { Input } from '@nextui-org/input';
+import {
+    SearchIcon,
+    TagUser,
+    Server,
+    Flash,
+    Activity,
+    Lock,
+    Scale,
+    ChevronDown,
+} from '@nextui-org/shared-icons';
+import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
 
 const icons = {
     chevron: <ChevronDown fill="currentColor" size={16} />,
@@ -29,26 +39,28 @@ const icons = {
 export function CustomNavBar() {
     const [_, setIsMenuOpen] = useState(false);
     return (
-
-        <Navbar  className={'bg-accent'}
-                 shouldHideOnScroll={true}
-                 onMenuOpenChange={setIsMenuOpen}
-                 isBordered
-                 maxWidth={'xl'}
+        <Navbar
+            className={'bg-accent'}
+            shouldHideOnScroll={true}
+            onMenuOpenChange={setIsMenuOpen}
+            isBordered
+            maxWidth={'xl'}
         >
             <NavbarContent>
                 <NavbarMenuToggle className={'sm:hidden'} />
                 <NavbarBrand>
-                    <Link href={'/'} className="font-bold text-inherit text-white">CUMEVENT</Link>
+                    <Link href={'/'} className="font-bold text-inherit text-white">
+                        CUMEVENT
+                    </Link>
                 </NavbarBrand>
             </NavbarContent>
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+            <NavbarContent className="hidden gap-4 sm:flex" justify="center">
                 <Dropdown>
                     <NavbarItem>
                         <DropdownTrigger>
                             <Button
                                 disableRipple
-                                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-white text-md"
+                                className="text-md bg-transparent p-0 text-white data-[hover=true]:bg-transparent"
                                 endContent={icons.chevron}
                                 radius="sm"
                                 variant="light"
@@ -61,7 +73,7 @@ export function CustomNavBar() {
                         aria-label="ACME features"
                         className="w-[340px]"
                         itemClasses={{
-                            base: "gap-4",
+                            base: 'gap-4',
                         }}
                     >
                         <DropdownItem
@@ -107,30 +119,34 @@ export function CustomNavBar() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link href="#" className={'text-white'}>
-                        Integrations
+                    <Link href="/org" className={'text-white'}>
+                        Organization
                     </Link>
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-
                 <NavbarItem className="hidden lg:flex">
-                    <Link href={"/signin"} className={'text-secondary'}>Login</Link>
+                    <Link href={'/signin'} className={'text-secondary'}>
+                        Login
+                    </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} className={'hover:text-white'} color="primary" href="/signup" variant="flat">
+                    <Button
+                        as={Link}
+                        className={'hover:text-white'}
+                        color="primary"
+                        href="/signup"
+                        variant="flat"
+                    >
                         Sign Up
                     </Button>
                 </NavbarItem>
             </NavbarContent>
             <NavbarMenu>
-                <NavbarMenuItem >
-                    <Link className={'text-accent text-xl'}>
-                        Hmm
-                    </Link>
+                <NavbarMenuItem>
+                    <Link className={'text-xl text-accent'}>Hmm</Link>
                 </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>
     );
 }
-
