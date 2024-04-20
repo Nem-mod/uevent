@@ -12,6 +12,7 @@ function Page({params, searchParams}: Props ) {
         <div className={'pt-12 max-w-screen-xl m-auto text-black'}>
             <h1 className={'text-6xl'}>Tickets</h1>
             <EventSearchForm className={'mt-10'}/>
+            <br/>
             {JSON.stringify(params)}
             {JSON.stringify(searchParams)}
 

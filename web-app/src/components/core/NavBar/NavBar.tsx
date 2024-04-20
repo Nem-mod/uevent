@@ -113,20 +113,7 @@ export function CustomNavBar() {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-                <NavbarItem>
-                    <Input
-                        classNames={{
-                            base: "max-w-full sm:max-w-[10rem] h-10",
-                            mainWrapper: "h-full",
-                            input: "text-small",
-                            inputWrapper: "h-full font-normal",
-                        }}
-                        placeholder="Type to search..."
-                        size="sm"
-                        startContent={<SearchIcon className={'text-accent'}  />}
-                        type="search"
-                    />
-                </NavbarItem>
+
                 <NavbarItem className="hidden lg:flex">
                     <Link href={"/signin"} className={'text-secondary'}>Login</Link>
                 </NavbarItem>
