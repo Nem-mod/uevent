@@ -13,13 +13,13 @@ function NavBar({className}: Props) {
                 aria-label="Example with disabled actions"
             >
                 <ListboxItem key={'events'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem title={'Events'}/>
+                    <NavBarItem href={'/org/events'} title={'Events'}/>
                 </ListboxItem>
                 <ListboxItem key={'members'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem title={'Members'}/>
+                    <NavBarItem href={'/org/members'} title={'Members'}/>
                 </ListboxItem>
                 <ListboxItem key={'analytics'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem title={'Analytics'}/>
+                    <NavBarItem href={'/org/analytics'} title={'Analytics'}/>
                 </ListboxItem>
 
             </Listbox>

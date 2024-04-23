@@ -50,7 +50,7 @@ function Slider() {
                     contentArray.map((e) => {
                         return (
                             <SwiperSlide
-                                key={e.start_time.getTime()}
+                                key={e.poster}
                                 className={`h-screen bg-primary`}
                             >
                                 <div
