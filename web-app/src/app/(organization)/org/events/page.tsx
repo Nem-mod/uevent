@@ -1,6 +1,7 @@
 'use client'
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Link} from "@nextui-org/react";
 import {useState} from "react";
+import {Button} from "@nextui-org/button";
 
 function Page() {
     const [page, setPage] = useState(1);
@@ -9,7 +10,10 @@ function Page() {
 
     return (
         <div className={'text-black'}>
-            <h1 className={'text-4xl'}>Events</h1>
+            <div className="flex justify-between">
+                <h1 className={'text-4xl'}>Events</h1>
+                <Button className={'bg-accent text-white'} as={Link}  href={'create-event'}>Add new event</Button>
+            </div>
             <Table
                 aria-label="Example empty table"
                 className={'mt-4'}
