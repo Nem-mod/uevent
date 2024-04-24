@@ -11,7 +11,6 @@ const formats = ['Concert', 'Gallery']
 
 function Page() {
     const [posterImg, setPosterImg] = useState<File>();
-
     const uploadFile = async () => {
         if (!posterImg)
             return
@@ -94,7 +93,7 @@ function Page() {
                                 </SelectItem>
                             ))}
                     </Select>
-                    <Button className={'bg-accent text-white mt-5'} size={'lg'}>Submit</Button>
+                    <Button className={'bg-accent text-white mt-5'} size={'lg'} onClick={uploadFile}>Submit</Button>
                 </form>
             </div>
         </div>
