@@ -4,9 +4,21 @@ import React from 'react';
 import Box from "@/components/utils/Box/Box";
 import {Button, Link} from "@nextui-org/react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
-import TicketCard from "@/components/core/TicketCard/TicketCard";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+import {useRouter} from "next/navigation";
 
 function Page() {
+
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const router = useRouter()
+
+    // TODO: add logic
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        console.log('Account deleted');
+        router.push('/');
+    }
 
     const user = {
         username: 'Getter-of-bitches',
@@ -87,22 +99,43 @@ function Page() {
                     >
                         Edit profile
                     </Button>
-                    {/*<Button*/}
-                    {/*    className={*/}
-                    {/*        'mt-auto ml-auto h-12 border border-primary bg-accent text-white hover:bg-accent ' +*/}
-                    {/*        'w-fit text-lg font-semibold hover:border-accent hover:text-white'*/}
-                    {/*    }*/}
-                    {/*>*/}
-                    {/*    Add payment method*/}
-                    {/*</Button>*/}
                     <Button
+                        onPress={onOpen}
+                        color={'danger'}
                         className={
-                            'mt-auto ml-auto h-12 border border-primary bg-red-800 text-white hover:bg-red-800/80 ' +
+                            'mt-auto ml-auto h-12 text-white ' +
                             'w-fit text-lg font-semibold hover:border-accent hover:text-white'
                         }
                     >
                         Delete Account
                     </Button>
+                    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+                        <ModalContent>
+                            {(onClose) => (
+                                <>
+                                    <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                                    <ModalBody>
+                                        <span className={'text-black font-semibold text-2xl'}>
+                                            Are you sure you want to delete your account?
+                                        </span>
+                                        <span className={'text-black font-semibold text-2xl'}>
+                                            It will be lost forever
+                                        </span>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button color="primary" variant="light" onPress={onClose}>
+                                            Cancel
+                                        </Button>
+                                        <form onSubmit={handleDelete}>
+                                            <Button type={'submit'} color="danger" onPress={onClose}>
+                                                Delete
+                                            </Button>
+                                        </form>
+                                    </ModalFooter>
+                                </>
+                            )}
+                        </ModalContent>
+                    </Modal>
                 </div>
                 <span className={'text-5xl font-extrabold text-black'}>
                 Purchase history:
