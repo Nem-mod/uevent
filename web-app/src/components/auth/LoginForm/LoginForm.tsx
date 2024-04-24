@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import Box from "@/components/utils/Box/Box";
+import {Link} from "@nextui-org/react";
 
 type FormValues = {
     email: string;
@@ -52,11 +53,18 @@ function LoginForm() {
                 label={'Password'}
                 errorMessage={errors.password?.message}
             />
+            <Link
+                href={'/recovery'}
+                underline={'hover'}
+                className={'ml-auto'}
+            >
+                Forgot password?
+            </Link>
             <Button
                 type={'submit'}
                 className={
                     'mt-4 h-12 border border-primary bg-accent text-white hover:bg-accent ' +
-                    'w-3/5 text-lg font-semibold hover:border-accent hover:text-white'
+                    'w-2/5 text-lg font-semibold hover:border-accent hover:text-white'
                 }
             >
                 Submit
