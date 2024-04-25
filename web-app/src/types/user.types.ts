@@ -12,9 +12,14 @@ export interface IUserRegisterForm {
     confirmPassword: string;
 }
 
-export interface IUserRegisterRes {
+export interface IUserRegisterAndAuthRes {
     id: number;
     email: string;
     username: string;
     verified: boolean;
+}
+
+export interface IUserAuthForm {
+    email: string;
+    password: string;
 }

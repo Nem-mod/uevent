@@ -1,10 +1,10 @@
 'use server'
-import {IUserRegisterForm, IUserRegisterRes} from "@/types/user.types";
+import {IUserRegisterForm, IUserRegisterAndAuthRes} from "@/types/user.types";
 import {redirect} from "next/navigation";
 import {sendRegisterVerification} from "@/actions/auth/user-verifications";
 
 export async function registerUser(data: IUserRegisterForm, redirectURL: string) {
-    let user: IUserRegisterRes | null = null;
+    let user: IUserRegisterAndAuthRes | null = null;
     try {
         const response = await fetch(`${process.env.HOST_SERVER_URL}/users/register`, {
             method: 'POST',
@@ -12,7 +12,7 @@ export async function registerUser(data: IUserRegisterForm, redirectURL: string)
                 'Content-type': 'application/json'
             },
             body: JSON.stringify(data)
-        })
+        });
 
         if (!response.ok) {
             throw new Error(`Registration failed, user already exists`);
@@ -26,7 +26,7 @@ export async function registerUser(data: IUserRegisterForm, redirectURL: string)
         const verificationRes = await sendRegisterVerification(`${redirectURL}?token=replaceToken&userId=${user.id}`, user.id);
 
         if (!verificationRes || verificationRes?.error) {
-            throw new Error('Failed to send verification')
+            throw new Error('Failed to send verification');
         }
 
     } catch (error) {

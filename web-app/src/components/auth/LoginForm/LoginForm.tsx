@@ -8,13 +8,12 @@ import { Button } from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import Box from "@/components/utils/Box/Box";
 import {Link} from "@nextui-org/react";
+import {IUserAuthForm} from "@/types/user.types";
+import {authUser} from "@/actions/auth/auth-user";
 
-type FormValues = {
-    email: string;
-    password: string;
-};
 
-const schema: ZodType<FormValues> = z.object({
+
+const schema: ZodType<IUserAuthForm> = z.object({
     email: z.string().email(),
     password: z.string(),
 });
@@ -24,15 +23,15 @@ function LoginForm() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormValues>({ resolver: zodResolver(schema) });
+    } = useForm<IUserAuthForm>({ resolver: zodResolver(schema) });
 
     // TODO: ADD LOGIC
-    const submitLogin = (data: FormValues) => {
-        console.log(data);
-    };
+    const action: () => void = handleSubmit(async (data: IUserAuthForm) => {
+        const res = await authUser(data);
+    })
     return (
         <form
-            onSubmit={handleSubmit(submitLogin)}
+            action={action}
             className={
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
