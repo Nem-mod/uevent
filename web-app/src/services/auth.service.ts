@@ -3,11 +3,14 @@ import {axiosWithoutAuth} from "@/api/interseptors";
 import {AxiosError} from "axios";
 
 export const authService = {
-    async login(data: IUserAuthForm): Promise<IUserRegisterAndAuthRes> {
-        const response = await axiosWithoutAuth.post('/auth/user/login', data);
-        if (response.statusText != 'OK')
-            throw new AxiosError('Login is failed');
-        return response.data;
+    async login(data: IUserAuthForm): Promise<IUserRegisterAndAuthRes | undefined> {
+        try {
+            const response = await axiosWithoutAuth.post('/auth/user/login', data);
+            return response.data;
+        } catch (error) {
+            if (error instanceof AxiosError && error.response)
+                throw new AxiosError(`${error.response.data.message}`)
+        }
     },
     async register(data: IUserRegisterForm): Promise<IUserRegisterAndAuthRes> {
         try {

@@ -1,16 +1,16 @@
 'use client';
 
 import React from 'react';
-import { z, ZodType } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from '@nextui-org/button';
+import {z, ZodType} from 'zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Button} from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import Box from "@/components/utils/Box/Box";
 import {Link} from "@nextui-org/react";
 import {IUserAuthForm} from "@/types/user.types";
-import {authUser} from "@/actions/auth/auth-user";
-
+import {authService} from "@/services/auth.service";
+import {useRouter} from "next/navigation";
 
 
 const schema: ZodType<IUserAuthForm> = z.object({
@@ -22,16 +22,24 @@ function LoginForm() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm<IUserAuthForm>({ resolver: zodResolver(schema) });
+        setError,
+        formState: {errors},
+    } = useForm<IUserAuthForm>({resolver: zodResolver(schema)});
 
-    // TODO: ADD LOGIC
+    const router = useRouter();
     const action: () => void = handleSubmit(async (data: IUserAuthForm) => {
-        const res = await authUser(data);
+        try {
+            await authService.login(data);
+            router.push(`/`);
+        } catch (error) {
+            if (error instanceof Error)
+                setError('root', {type: 'custom', message: error.message});
+        }
     })
+
     return (
         <form
-            action={action}
+            onSubmit={action}
             className={
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
@@ -59,6 +67,9 @@ function LoginForm() {
             >
                 Forgot password?
             </Link>
+            {errors.root?.message && (
+                <h1 className={'text-red-600'}>{errors.root.message}</h1>
+            )}
             <Button
                 type={'submit'}
                 className={
