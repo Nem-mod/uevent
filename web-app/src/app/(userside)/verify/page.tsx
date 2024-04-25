@@ -1,6 +1,5 @@
 import {Link} from "@nextui-org/react";
-import {sendRegisterVerification, verifyUser} from "@/actions/auth/user-verifications";
-import {Button} from "@nextui-org/button";
+import {verifyUser} from "@/actions/auth/user-verifications";
 import ResendVerificationLink from "@/components/auth/ResendVerificationLink/ResendVerificationLink";
 
 interface SearchQuery {
