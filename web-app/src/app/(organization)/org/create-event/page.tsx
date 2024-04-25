@@ -23,24 +23,6 @@ function Page() {
         } catch (error) {
             console.log(error)
         }
-        // let formData = new FormData();
-        // const timestamp = Date.now();
-        //
-        // formData.append("image", posterImg, `${timestamp}.webp`);
-        //
-        // const requestOptions: RequestInit = {
-        //     method: "POST",
-        //     body: formData,
-        // };
-        //
-        // try {
-        //     const response = await fetch("/api/upload", requestOptions);
-        //     if (!response.ok) throw new Error("Failed to upload");
-        //     const data = await response.json();
-        //     console.log("Upload successful:", data);
-        // } catch (error) {
-        //     console.error("Error uploading audio:", error);
-        // }
     }
 
     return (
