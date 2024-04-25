@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { Input } from '@nextui-org/input';
 import { UseFormRegister } from 'react-hook-form';
 
@@ -22,12 +21,13 @@ function InputFormText({
     rules,
     errorMessage,
     ...props
-}: Props) {
-    return (
+}: Props) {return (
         <Input
             {...(register && register(name, rules))}
+            isRequired
             type={type}
             placeholder={placeholder}
+            isInvalid={Boolean(errorMessage)}
             errorMessage={errorMessage}
             size={'lg'}
             radius={'sm'}
@@ -35,23 +35,12 @@ function InputFormText({
             {...props}
             classNames={{
                 input: [
-                    // 'bg-transparent',
                     'text-black',
                 ],
                 label: ['text-accent'],
                 mainWrapper: [
-                    // 'bg-primary',
-                    // 'hover:bg-primary'
                     'hover:bg-primary/40',
-                ],
-                innerWrapper: [
-                    // 'hover:bg-primary'
-                ],
-                inputWrapper: [
-                    // 'hover:bg-accent',
-                    // 'dark:hover:bg-accent',
-                    // "group-data-[focused=true]:bg-primary"
-                ],
+                ]
             }}
         />
     );
