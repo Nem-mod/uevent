@@ -1,20 +1,15 @@
 'use client';
-import React from 'react';
-
 import { z, ZodType } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import { Button } from '@nextui-org/button';
+import {IUserRegisterForm} from "@/types/user.types";
+import {registerUser} from "@/actions/auth/register-user";
 
-type FormValues = {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-};
 
-const schema: ZodType<FormValues> = z
+
+const schema: ZodType<IUserRegisterForm> = z
     .object({
         username: z.string().min(3, 'Username is too short'),
         email: z.string().email('Incorrect email'),
@@ -30,19 +25,22 @@ function RegistrationForm() {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
-    } = useForm<FormValues>({ resolver: zodResolver(schema) });
+    } = useForm<IUserRegisterForm>({ resolver: zodResolver(schema) });
+    const action: () => void = handleSubmit(async (data: IUserRegisterForm) => {
 
-    // TODO: ADD LOGIC
-    const submitLogin = (data: FormValues) => {
-        console.log(data);
-    };
+        const redirectURL = `${window.location.origin}/verify`;
+        const res = await registerUser(data, redirectURL);
+        setError('root', { type: 'custom', message: res })
+    });
+
     return (
         <form
+            action={action}
             className={
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
-            onSubmit={handleSubmit(submitLogin)}
         >
             <h1 className={'text-3xl font-bold text-black'}>Registration lmao</h1>
 
@@ -75,6 +73,9 @@ function RegistrationForm() {
                 label={'Repeat Password'}
                 errorMessage={errors.confirmPassword?.message}
             />
+            {errors.root?.message && (
+                <h1 className={'text-red-600'}>{errors.root.message}</h1>
+            )}
             <Button
                 type={'submit'}
                 className={
