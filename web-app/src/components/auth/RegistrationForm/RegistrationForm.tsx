@@ -1,19 +1,20 @@
 'use client';
-import { z, ZodType } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {z, ZodType} from 'zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
-import { Button } from '@nextui-org/button';
+import {Button} from '@nextui-org/button';
 import {IUserRegisterForm} from "@/types/user.types";
-import {registerUser} from "@/actions/auth/register-user";
-
+import {authService} from "@/services/auth.service";
+import {useRouter} from "next/navigation";
 
 
 const schema: ZodType<IUserRegisterForm> = z
     .object({
         username: z.string().min(3, 'Username is too short'),
         email: z.string().email('Incorrect email'),
-        password: z.string().min(4, 'Password is too short').max(20),
+        password: z.string().min(4, 'Password is too short'),
+            // .refine(isStrongPassword, 'Use at least one number and uppercase character'),
         confirmPassword: z.string().min(4, 'Password is too short').max(20),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -26,18 +27,27 @@ function RegistrationForm() {
         register,
         handleSubmit,
         setError,
-        formState: { errors },
-    } = useForm<IUserRegisterForm>({ resolver: zodResolver(schema) });
-    const action: () => void = handleSubmit(async (data: IUserRegisterForm) => {
+        formState: {errors},
+    } = useForm<IUserRegisterForm>({resolver: zodResolver(schema)});
 
-        const redirectURL = `${window.location.origin}/verify`;
-        const res = await registerUser(data, redirectURL);
-        setError('root', { type: 'custom', message: res })
+    const router = useRouter();
+    const action: () => void = handleSubmit(async (data: IUserRegisterForm) => {
+        try {
+            const user = await authService.register(data);
+            const redirectURL = `${window.location.origin}/verify`;
+
+            await authService.sendVerificationLink(redirectURL, user.id);
+            router.push(`/signup/success?userId=${user.id}`);
+        } catch (error) {
+            if (error instanceof Error)
+                setError('root', {type: 'custom', message: error.message});
+        }
+
     });
 
     return (
         <form
-            action={action}
+            onSubmit={action}
             className={
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
