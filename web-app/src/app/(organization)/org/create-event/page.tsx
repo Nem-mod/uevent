@@ -6,6 +6,7 @@ import {DatePicker} from "@nextui-org/date-picker";
 import {now, getLocalTimeZone, today} from "@internationalized/date";
 import {Select, SelectItem} from "@nextui-org/react";
 import {Button} from "@nextui-org/button";
+import {uploadPoster} from "@/actions/gcs/upload-poster";
 
 const formats = ['Concert', 'Gallery']
 
@@ -13,25 +14,33 @@ function Page() {
     const [posterImg, setPosterImg] = useState<File>();
     const uploadFile = async () => {
         if (!posterImg)
-            return
-        let formData = new FormData();
-        const timestamp = Date.now();
-
-        formData.append("image", posterImg, `${timestamp}.webp`);
-
-        const requestOptions: RequestInit = {
-            method: "POST",
-            body: formData,
-        };
-
+            return;
         try {
-            const response = await fetch("/api/upload", requestOptions);
-            if (!response.ok) throw new Error("Failed to upload");
-            const data = await response.json();
-            console.log("Upload successful:", data);
+            let formData = new FormData();
+            const timestamp = Date.now();
+            formData.append("image", posterImg, `${timestamp}.webp`);
+            const res = await uploadPoster(formData);
         } catch (error) {
-            console.error("Error uploading audio:", error);
+            console.log(error)
         }
+        // let formData = new FormData();
+        // const timestamp = Date.now();
+        //
+        // formData.append("image", posterImg, `${timestamp}.webp`);
+        //
+        // const requestOptions: RequestInit = {
+        //     method: "POST",
+        //     body: formData,
+        // };
+        //
+        // try {
+        //     const response = await fetch("/api/upload", requestOptions);
+        //     if (!response.ok) throw new Error("Failed to upload");
+        //     const data = await response.json();
+        //     console.log("Upload successful:", data);
+        // } catch (error) {
+        //     console.error("Error uploading audio:", error);
+        // }
     }
 
     return (
