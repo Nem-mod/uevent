@@ -11,9 +11,9 @@ import {
     NavbarMenuItem,
     NavbarMenuToggle,
 } from '@nextui-org/react';
-import { Button } from '@nextui-org/button';
-import { useState } from 'react';
-import { Input } from '@nextui-org/input';
+import {Button} from '@nextui-org/button';
+import {useEffect, useState} from 'react';
+import {Input} from '@nextui-org/input';
 import {
     SearchIcon,
     TagUser,
@@ -24,20 +24,33 @@ import {
     Scale,
     ChevronDown,
 } from '@nextui-org/shared-icons';
-import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
+import {Dropdown, DropdownTrigger} from '@nextui-org/dropdown';
+import {authService} from "@/services/auth.service";
+import {IUserRegisterAndAuthRes} from "@/types/user.types";
 
 const icons = {
-    chevron: <ChevronDown fill="currentColor" size={16} />,
-    scale: <Scale className="text-warning" fill="currentColor" size={30} />,
-    lock: <Lock className="text-success" fill="currentColor" size={30} />,
-    activity: <Activity className="text-secondary" fill="currentColor" size={30} />,
-    flash: <Flash className="text-primary" fill="currentColor" size={30} />,
-    server: <Server className="text-success" fill="currentColor" size={30} />,
-    user: <TagUser className="text-danger" fill="currentColor" size={30} />,
+    chevron: <ChevronDown fill="currentColor" size={16}/>,
+    scale: <Scale className="text-warning" fill="currentColor" size={30}/>,
+    lock: <Lock className="text-success" fill="currentColor" size={30}/>,
+    activity: <Activity className="text-secondary" fill="currentColor" size={30}/>,
+    flash: <Flash className="text-primary" fill="currentColor" size={30}/>,
+    server: <Server className="text-success" fill="currentColor" size={30}/>,
+    user: <TagUser className="text-danger" fill="currentColor" size={30}/>,
 };
 
 export function CustomNavBar() {
     const [_, setIsMenuOpen] = useState(false);
+    const [user, setUser] = useState<IUserRegisterAndAuthRes | null>();
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        authService.getMe().then(res => {
+            setUser(res);
+            setIsLoading(false);
+        }).catch(() => {
+            setUser(null);
+            setIsLoading(false);
+        })
+    }, [])
     return (
         <Navbar
             className={'bg-accent'}
@@ -47,7 +60,7 @@ export function CustomNavBar() {
             maxWidth={'xl'}
         >
             <NavbarContent>
-                <NavbarMenuToggle className={'sm:hidden'} />
+                <NavbarMenuToggle className={'sm:hidden'}/>
                 <NavbarBrand>
                     <Link href={'/'} className="font-bold text-inherit text-white">
                         CUMEVENT
@@ -125,28 +138,34 @@ export function CustomNavBar() {
                 </NavbarItem>
             </NavbarContent>
             <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href={'/signin'} className={'text-secondary'}>
-                        Login
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button
-                        as={Link}
-                        className={'hover:text-white'}
-                        color="primary"
-                        href="/signup"
-                        variant="flat"
-                    >
-                        Sign Up
-                    </Button>
-                </NavbarItem>
+                {!isLoading && (user ? (
+                    <NavbarItem className="hidden lg:flex">
+                        <Link href={'/profile'} className={'text-secondary'}>
+                            {user.email}
+                        </Link>
+                    </NavbarItem>
+                ) : (
+                    <>
+                        <NavbarItem className="hidden lg:flex">
+                            <Link href={'/signin'} className={'text-secondary'}>
+                                Login
+                            </Link>
+                        </NavbarItem>
+                        <NavbarItem>
+                            <Button
+                                as={Link}
+                                className={'hover:text-white'}
+                                color="primary"
+                                href="/signup"
+                                variant="flat"
+                            >
+                                Sign Up
+                            </Button>
+                        </NavbarItem>
+
+                    </>
+                ))}
             </NavbarContent>
-            <NavbarMenu>
-                <NavbarMenuItem>
-                    <Link className={'text-xl text-accent'}>Hmm</Link>
-                </NavbarMenuItem>
-            </NavbarMenu>
         </Navbar>
     );
 }
