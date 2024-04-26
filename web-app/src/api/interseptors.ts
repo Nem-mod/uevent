@@ -18,7 +18,7 @@ axiosWithAuth.interceptors.request.use(
     },
     async (error) => {
         if (error.response.status === 401) {
-            // await axios.get('/auth/refresh');
+            await axios.get('/auth/user/refresh');
         }
     }
 );
