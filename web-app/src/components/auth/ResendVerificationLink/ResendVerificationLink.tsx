@@ -8,7 +8,7 @@ interface Props {
 }
 function ResendVerificationLink({userId}: Props) {
     const handleClick = async () => {
-        const redirectURL = `$${window.location.origin}/verify?token=replaceToken&userId=${userId}`;
+        const redirectURL = `${window.location.origin}/verify?token=replaceToken&userId=${userId}`;
         await authService.sendVerificationLink(redirectURL, userId)
     }
     return (
