@@ -34,7 +34,7 @@ function RegistrationForm() {
     const action: () => void = handleSubmit(async (data: IUserRegisterForm) => {
         try {
             const user = await authService.register(data);
-            const redirectURL = `${window.location.origin}/verify?token=replaceToken&userId=${userId}`;
+            const redirectURL = `${window.location.origin}/verify?token=replaceToken&userId=${user.id}`;
 
             await authService.sendVerificationLink(redirectURL, user.id);
             router.push(`/signup/success?userId=${user.id}`);
