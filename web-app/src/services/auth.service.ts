@@ -1,4 +1,4 @@
-import {IUserAuthForm, IUserRegisterAndAuthRes, IUserRegisterForm} from "@/types/user.types";
+import {IUserAuthForm, IUserRegisterAndAuthRes, IUserRegisterForm, User} from "@/types/user.types";
 import {axiosWithoutAuth} from "@/api/interseptors";
 import {AxiosError} from "axios";
 
@@ -18,6 +18,15 @@ export const authService = {
             return response.data;
         } catch (e) {
             throw new AxiosError('Registration failed, user already exists')
+        }
+    },
+
+    async getMe(): Promise<IUserRegisterAndAuthRes> {
+        try {
+            const response = await axiosWithoutAuth.get('/users/me');
+            return response.data;
+        } catch (e) {
+            throw new AxiosError('Auth Failed')
         }
     },
 
