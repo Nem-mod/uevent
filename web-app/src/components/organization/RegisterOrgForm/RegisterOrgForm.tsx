@@ -1,41 +1,43 @@
-'use client'
+'use client';
 
-import {z, ZodType} from "zod";
-import {isMobilePhone} from "validator";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import InputFormText from "@/components/auth/InputFormText/InputFormText";
-import {Button} from "@nextui-org/button";
-import {Textarea} from "@nextui-org/input";
+import { z, ZodType } from 'zod';
+import { isMobilePhone } from 'validator';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import InputFormText from '@/components/auth/InputFormText/InputFormText';
+import { Button } from '@nextui-org/button';
+import { Textarea } from '@nextui-org/input';
+import { organizationService } from '@/services/organization.service';
+import { AxiosError } from 'axios';
 
-type FormValues = {
-    name: string;
-    email: string;
-    phoneNumber: string;
-    description: string;
-    fop: string
-};
 
-const schema: ZodType<FormValues> = z
+const schema: ZodType<IOrganization> = z
     .object({
         name: z.string().min(3, 'Username is too short'),
         email: z.string().email('Incorrect email'),
         phoneNumber: z.string().refine(isMobilePhone),
         description: z.string(),
-        fop: z.string()
+        fopIdentifier: z.string(),
     });
 
 function RegisterOrgForm() {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
-    } = useForm<FormValues>({ resolver: zodResolver(schema) });
+    } = useForm<IOrganization>({ resolver: zodResolver(schema) });
 
-    // TODO: ADD LOGIC
-    const handleSubmitRegister = (data: FormValues) => {
-        console.log(data);
-    };
+    const handleSubmitRegister = async (data: IOrganization) => {
+        try {
+            const res = await organizationService.registerOrganization(data);
+        } catch (error) {
+            if (error instanceof AxiosError)
+                { // @ts-ignore
+                    setError('root', {type: 'custom', message: error?.response.data.message});
+                }
+        }
+    }
 
     return (
         <form
@@ -77,14 +79,14 @@ function RegisterOrgForm() {
                 errorMessage={errors.description?.message}
             />
             <InputFormText
-                name={'fop'}
+                name={'fopIdentifier'}
                 register={register}
                 type={'text'}
                 label={'FOP id'}
-                errorMessage={errors.fop?.message}
+                errorMessage={errors.fopIdentifier?.message}
             />
             <Textarea
-                {...register("description")}
+                {...register('description')}
                 label={'Organization description'}
                 errorMessage={errors.description?.message}
                 classNames={{
@@ -97,6 +99,10 @@ function RegisterOrgForm() {
                     ],
                 }}
             />
+
+            {errors.root?.message && (
+                <h1 className={'text-red-600'}>{errors.root.message}</h1>
+            )}
 
             <Button
                 type={'submit'}
