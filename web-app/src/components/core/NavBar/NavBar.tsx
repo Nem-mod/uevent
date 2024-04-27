@@ -70,7 +70,7 @@ export function CustomNavBar() {
                 </NavbarBrand>
             </NavbarContent>
             <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-                {organizations.length != 0 && (
+                {organizations.length != 0 ? (
 
                     <NavbarItem>
                         <Dropdown>
@@ -108,18 +108,20 @@ export function CustomNavBar() {
                             </DropdownMenu>
                         </Dropdown>
                     </NavbarItem>
+                ): (
+                    <NavbarItem isActive>
+                        <Link href={'/new-organization'} aria-current='page' className={'text-white'}>
+                            Create an organization
+                        </Link>
+                    </NavbarItem>
                 )}
 
                 <NavbarItem isActive>
-                    <Link href='#' aria-current='page' className={'text-white'}>
-                        Customers
+                    <Link href={'/events'} aria-current='page' className={'text-white'}>
+                        Events
                     </Link>
                 </NavbarItem>
-                <NavbarItem>
-                    <Link href='/org' className={'text-white'}>
-                        Organization
-                    </Link>
-                </NavbarItem>
+
             </NavbarContent>
             <NavbarContent justify='end'>
                 {!isLoading && (user ? (
