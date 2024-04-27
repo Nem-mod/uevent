@@ -12,13 +12,14 @@ const axiosWithoutAuth = axios.create(options);
 
 const axiosWithAuth = axios.create(options);
 
-axiosWithAuth.interceptors.request.use(
+axiosWithAuth.interceptors.response.use(
     (response) => {
         return response
     },
     async (error) => {
+        console.log('aaa');
         if (error.response.status === 401) {
-            await axios.post('/auth/user/refresh');
+            await axiosWithoutAuth.post('/auth/user/refresh');
         }
     }
 );
