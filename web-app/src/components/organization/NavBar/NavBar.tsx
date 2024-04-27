@@ -17,7 +17,7 @@ function NavBar({className, organization}: Props) {
                     <NavBarItem href={`/org/${organization.id}/events`} title={'Events'}/>
                 </ListboxItem>
                 <ListboxItem key={'create-event'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem href={`org/${organization.id}/create-events`} title={'Create Event'}/>
+                    <NavBarItem href={`/org/${organization.id}/create-event`} title={'Create Event'}/>
                 </ListboxItem>
                 <ListboxItem key={'members'} variant={'light'} className={'hover:bg-accentSecond'}>
                     <NavBarItem href={`/org/${organization.id}/members`} title={'Members'}/>

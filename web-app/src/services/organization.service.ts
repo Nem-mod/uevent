@@ -3,12 +3,20 @@ import { IOrganization, IOrganizationRegisterForm } from '@/types/organization.t
 
 export const organizationService = {
     async registerOrganization(data: IOrganizationRegisterForm) {
-        const response = await axiosWithAuth.post('/org/register', data);
-        return response.data;
+        try {
+            const response = await axiosWithAuth.post('/org/register', data);
+            return response.data;
+        } catch (e) {
+
+        }
     },
 
-    async getAllOrganizations(): Promise<IOrganization[]>{
-        const response = await axiosWithAuth.get('/org');
-        return response.data;
-    }
+    async getAllOrganizations(): Promise<IOrganization[]> {
+        try {
+            const response = await axiosWithAuth.get('/org');
+            return response.data;
+        } catch (e) {
+            throw new Error('Get all org error');
+        }
+    },
 };

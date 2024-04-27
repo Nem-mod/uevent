@@ -26,10 +26,11 @@ function Layout({ children, params: { id } }: Props) {
     }, []);
 
     return (
-        <div className={'flex'}>
+        <div className={'flex relative'}>
             {organization && (
                 <>
                     <SideBar organization={organization} />
+                    <div className={'w-2/12 px-36'}></div>
                     <main className={'mt-24 px-10 w-full'}>
                         {children}
                     </main>

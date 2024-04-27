@@ -8,7 +8,7 @@ interface Props {
 
 function SideBar({ organization }: Props) {
     return (
-        <div className={'bg-accent w-2/12 h-screen static'}>
+        <div className={'bg-accent w-2/12 h-svh  fixed'}>
             <Navbar organization={organization} className={'mt-24 px-3'} />
         </div>
     );
