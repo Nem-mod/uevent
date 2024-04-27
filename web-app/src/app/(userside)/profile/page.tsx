@@ -1,28 +1,31 @@
 'use client'
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from "@/components/utils/Box/Box";
 import {Button, Link} from "@nextui-org/react";
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 import {useRouter} from "next/navigation";
+import {authService} from "@/services/auth.service";
 
 function Page() {
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const router = useRouter()
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        authService.getMe().then((res) => {
+            setUser(res);
+        })
+    }, []);
 
     // TODO: add logic
     const handleDelete = (e) => {
         e.preventDefault();
 
         console.log('Account deleted');
-        router.push('/');
-    }
-
-    const user = {
-        username: 'Getter-of-bitches',
-        email: 'john.doe@gmail.com'
+        router.replace('/');
     }
 
     const columns = [
