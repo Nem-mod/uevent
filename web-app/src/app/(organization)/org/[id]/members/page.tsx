@@ -1,11 +1,10 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import Box from "@/components/utils/Box/Box";
 import {Button} from '@nextui-org/button';
 import {Input} from "@nextui-org/input";
-import {randomInt} from "crypto";
 
 
 function Page() {

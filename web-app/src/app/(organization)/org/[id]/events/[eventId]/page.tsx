@@ -3,7 +3,7 @@
 import { Button } from '@nextui-org/button';
 import Box from "@/components/utils/Box/Box";
 import {DatePicker} from "@nextui-org/date-picker";
-import {now, getLocalTimeZone, DateFormatter, parseDate} from "@internationalized/date";
+import {now, getLocalTimeZone} from "@internationalized/date";
 import {Input, Textarea} from "@nextui-org/input";
 import React, {useState} from "react";
 import {Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
