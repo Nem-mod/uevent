@@ -1,5 +1,5 @@
 import {IUserAuthForm, IUserRegisterAndAuthRes, IUserRegisterForm, User} from "@/types/user.types";
-import {axiosWithoutAuth} from "@/api/interseptors";
+import { axiosWithAuth, axiosWithoutAuth } from '@/api/interseptors';
 import {AxiosError} from "axios";
 
 export const authService = {
@@ -23,7 +23,7 @@ export const authService = {
 
     async getMe(): Promise<IUserRegisterAndAuthRes> {
         try {
-            const response = await axiosWithoutAuth.get('/users/me');
+            const response = await axiosWithAuth.get('/users/me');
             return response.data;
         } catch (e) {
             throw new AxiosError('Auth Failed')
