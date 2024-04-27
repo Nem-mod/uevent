@@ -18,7 +18,8 @@ axiosWithAuth.interceptors.response.use(
     },
     async (error) => {
         console.log('aaa');
-        if (error.response.status === 401) {
+        console.log(error);
+        if (error?.response.status === 401) {
             await axiosWithoutAuth.post('/auth/user/refresh');
         }
     }
