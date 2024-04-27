@@ -4,9 +4,7 @@ export async function middleware(
     request: NextRequest,
     response: NextResponse
 ) {
-    const {url, cookies} = request;
-    console.log(url, cookies);
-    return;
+    return NextResponse.next();
 }
 
 export const config = {

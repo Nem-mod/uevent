@@ -1,10 +1,17 @@
 import React from 'react';
-import Navbar from "@/components/organization/NavBar/NavBar";
+import Navbar from '@/components/organization/NavBar/NavBar';
+import { IOrganization } from '@/types/organization.types';
 
-function SideBar() {
-    return <div className={'bg-accent w-2/12 h-screen static'}>
-        <Navbar className={'mt-24 px-3'}/>
-    </div>;
+interface Props {
+    organization: IOrganization;
+}
+
+function SideBar({ organization }: Props) {
+    return (
+        <div className={'bg-accent w-2/12 h-screen static'}>
+            <Navbar organization={organization} className={'mt-24 px-3'} />
+        </div>
+    );
 }
 
 export default SideBar;

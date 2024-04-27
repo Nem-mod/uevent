@@ -9,9 +9,10 @@ import { Button } from '@nextui-org/button';
 import { Textarea } from '@nextui-org/input';
 import { organizationService } from '@/services/organization.service';
 import { AxiosError } from 'axios';
+import { IOrganizationRegisterForm } from '@/types/organization.types';
 
 
-const schema: ZodType<IOrganization> = z
+const schema: ZodType<IOrganizationRegisterForm> = z
     .object({
         name: z.string().min(3, 'Username is too short'),
         email: z.string().email('Incorrect email'),
@@ -26,9 +27,9 @@ function RegisterOrgForm() {
         handleSubmit,
         setError,
         formState: { errors },
-    } = useForm<IOrganization>({ resolver: zodResolver(schema) });
+    } = useForm<IOrganizationRegisterForm>({ resolver: zodResolver(schema) });
 
-    const handleSubmitRegister = async (data: IOrganization) => {
+    const handleSubmitRegister = async (data: IOrganizationRegisterForm) => {
         try {
             const res = await organizationService.registerOrganization(data);
         } catch (error) {

@@ -1,25 +1,29 @@
 "use client"
 import React from 'react';
-import {Listbox, ListboxItem} from "@nextui-org/react";
+import { Listbox, ListboxItem } from '@nextui-org/react';
 import NavBarItem from "@/components/organization/NavBarItem/NavBarItem";
-
+import { IOrganization } from '@/types/organization.types';
 interface Props {
-    className?: string
+    className?: string;
+    organization: IOrganization;
 }
-function NavBar({className}: Props) {
+function NavBar({className, organization}: Props) {
     return (
         <nav className={className}>
             <Listbox
                 aria-label="Example with disabled actions"
             >
-                <ListboxItem key={'events'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem href={'/org/events'} title={'Events'}/>
+                <ListboxItem key={`events`} variant={'light'} className={'hover:bg-accentSecond'}>
+                    <NavBarItem href={`/org/${organization.id}/events`} title={'Events'}/>
+                </ListboxItem>
+                <ListboxItem key={'create-event'} variant={'light'} className={'hover:bg-accentSecond'}>
+                    <NavBarItem href={`org/${organization.id}/create-events`} title={'Create Event'}/>
                 </ListboxItem>
                 <ListboxItem key={'members'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem href={'/org/members'} title={'Members'}/>
+                    <NavBarItem href={`/org/${organization.id}/members`} title={'Members'}/>
                 </ListboxItem>
-                <ListboxItem key={'analytics'} variant={'light'} className={'hover:bg-accentSecond'}>
-                    <NavBarItem href={'/org/analytics'} title={'Analytics'}/>
+                <ListboxItem key={'main'} variant={'light'} className={'hover:bg-accentSecond'}>
+                    <NavBarItem href={'/'} title={'Main page'}/>
                 </ListboxItem>
 
             </Listbox>

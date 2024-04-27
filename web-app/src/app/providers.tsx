@@ -13,7 +13,7 @@ export function Providers({ children }: ProvidersProps) {
 
     return (
         <StoreProvider>
-            <NextUIProvider>{children}</NextUIProvider>
+            <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
         </StoreProvider>
     );
 }
