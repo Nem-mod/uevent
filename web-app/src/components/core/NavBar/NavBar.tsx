@@ -51,7 +51,7 @@ export function CustomNavBar() {
         });
         organizationService.getAllOrganizations().then(res => {
             setOrganizations(res);
-        });
+        }).catch(err => console.log(err));
     }, []);
     return (
         <Navbar

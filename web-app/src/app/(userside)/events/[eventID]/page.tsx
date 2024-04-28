@@ -2,19 +2,27 @@
 
 import Box from '@/components/utils/Box/Box';
 import { Button } from '@nextui-org/react';
+import { IEventGetRes } from '@/types/IEvent';
+import { redirect } from 'next/navigation';
 
-function Page() {
-    const someFetchedEvent = {
-        title: 'VIP event (No bitches)',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet asperiores aut blanditiis, cum deleniti dicta facere illo, illum inventore maiores mollitia non provident, quisquam sequi sunt suscipit tempore temporibus ullam!',
-        startTime: new Date(),
-        duration: 120 * 60,
-        price: 400,
-        location: '221B Baker Street',
-        poster: 'https://img.ticketsbox.com/cache/0x0/data/!!!!/duna.jpg_.webp',
+interface Props {
+    params: {
+        eventID: string;
     };
+}
 
+async function getEvent(id: number | string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/event/${id}`);
+    if (!response.ok) {
+        redirect('/');
+    }
+    const event: IEventGetRes = await response.json();
+    event.startTime = new Date(event.startTime);
+    return event;
+}
+
+async function Page({ params }: Props) {
+    const someFetchedEvent: IEventGetRes = await getEvent(params.eventID);
     return (
         <Box className={'flex max-h-screen gap-20 p-10'}>
             <div className={'w-1/3 p-0 '}>
@@ -40,9 +48,9 @@ function Page() {
                         <span className={'text-bold text-lg text-black'}>
                             {someFetchedEvent.duration} No I won't fix this
                         </span>
-                        <span className={'text-bold text-lg text-black'}>
-                            {someFetchedEvent.price} Gryvni suka
-                        </span>
+                        {/*<span className={'text-bold text-lg text-black'}>*/}
+                        {/*    {someFetchedEvent.price} Gryvni suka*/}
+                        {/*</span>*/}
                     </div>
                 </div>
                 <span className={'text-xl font-bold text-gray-700'}>Description:</span>

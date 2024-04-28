@@ -35,15 +35,12 @@ async function fetchEvents(query?: SearchQuery, body?: any) {
     const page = query?.page || 1;
     const pbefore = (page - 1) * offset;
     const cevnts = page * offset;
-    console.log(pbefore, cevnts);
     return data.slice(pbefore, cevnts);
 }
 
 export default async function Page({params, searchParams}: Props) {
     let eventList = await fetchEvents(searchParams);
-    console.log(eventList)
     const dummyData = await fetch('https://dummyjson.com/products/1')
-    console.log(dummyData)
     return (
         <div className={'m-auto max-w-screen-xl pt-12 text-black'}>
             <h1 className={'text-6xl'}>Tickets</h1>

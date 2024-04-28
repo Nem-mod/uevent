@@ -1,9 +1,9 @@
 import React from 'react';
 import EventCard from "@/components/core/EventCard/EventCard";
-import {IEvents} from "@/types/IEvents";
+import {IEvent} from "@/types/IEvent";
 
 interface Props {
-    events: IEvents[]
+    events: IEvent[]
 }
 function EventList({events}: Props) {
     return (
