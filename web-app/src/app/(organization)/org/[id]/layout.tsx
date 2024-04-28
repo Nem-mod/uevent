@@ -4,6 +4,7 @@ import { organizationService } from '@/services/organization.service';
 import { useEffect, useState } from 'react';
 import { IOrganization } from '@/types/organization.types';
 import { useRouter } from 'next/navigation';
+import OrganizationProvider from '@/providers/OrganizationProvider';
 
 interface Props {
     children: Readonly<React.ReactNode>,
@@ -28,13 +29,13 @@ function Layout({ children, params: { id } }: Props) {
     return (
         <div className={'flex relative'}>
             {organization && (
-                <>
+                <OrganizationProvider orgId={organization.id}>
                     <SideBar organization={organization} />
                     <div className={'w-2/12 px-36'}></div>
                     <main className={'mt-24 px-10 w-full'}>
                         {children}
                     </main>
-                </>
+                </OrganizationProvider>
             )}
         </div>
     );
