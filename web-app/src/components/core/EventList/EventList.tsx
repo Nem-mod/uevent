@@ -11,7 +11,7 @@ function EventList({events}: Props) {
             {events && events.map((e) => (
                 <EventCard
                     title={e.title}
-                    start={e.startTime}
+                    start={new Date(e.startTime)}
                     price={100}
                     tag={'Bitch nigga'}
                     address={e.location}

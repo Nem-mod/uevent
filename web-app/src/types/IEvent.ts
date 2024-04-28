@@ -33,6 +33,10 @@ export interface IEventGetRes extends IEvent{
     format: IEventFormat;
 }
 
+export interface IEventsGetWithPagination {
+    data: IEventGetRes[];
+    count: number; // Number of events in database
+}
 
 export interface ICreateEventAndTickets {
     title: string;
@@ -45,3 +49,5 @@ export interface ICreateEventAndTickets {
     location?: string;
     tickets?: ICreateEventTicket[];
 }
+
+

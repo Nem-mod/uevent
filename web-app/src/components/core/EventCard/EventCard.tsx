@@ -24,7 +24,7 @@ function EventCard({title, start, price, tag, address, img, href}: CardTypes) {
                     </div>
                     <div className={'flex flex-col gap-2'}>
                     <span className={'text-m font-semibold text-black'}>
-                        {start.toDateString()}
+                        {start && start.toDateString()}
                     </span>
                         <span className={'text-m text-gray-500'}>{tag}</span>
                     </div>

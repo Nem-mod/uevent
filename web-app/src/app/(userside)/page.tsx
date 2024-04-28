@@ -1,9 +1,23 @@
 import Slider from '@/components/core/Slider/Slider';
 import { Button } from '@nextui-org/button';
-import { Card, CardBody, CardHeader, Link, Image } from '@nextui-org/react';
+import { Link } from '@nextui-org/react';
 import EventCard from '@/components/core/EventCard/EventCard';
+import { IEventsGetWithPagination } from '@/types/IEvent';
+import { PAGINATION_OFFSET } from '@/constants/pagination';
 
-export default function Home() {
+async function fetchEvents(): Promise<IEventsGetWithPagination> {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
+        + `offset=${PAGINATION_OFFSET}`,
+        {
+            cache: 'no-cache',
+        },
+    );
+    return await response.json();
+}
+
+export default async function Home() {
+    const { data: eventList } = await fetchEvents();
     return (
         <div className={'h-full'}>
             <div className={'h-unit-9xl w-full'}>
@@ -13,31 +27,17 @@ export default function Home() {
                 <h2 className={'text-3xl font-bold text-black'}>TOP EVENTS</h2>
 
                 <div className={'mt-5 flex flex-wrap justify-center gap-10'}>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
-                        <Card className="max-w-lg py-4">
-                            <CardHeader className="flex-col items-start px-4 pb-0 pt-2">
-                                <p className="text-tiny font-bold uppercase">Daily Mix</p>
-                                <small className="text-default-500">12 Tracks</small>
-                                <h4 className="text-large font-bold">Frontend Radio</h4>
-                            </CardHeader>
-                            <CardBody className="overflow-visible py-2">
-                                <Image
-                                    alt="Card background"
-                                    className="rounded-xl object-cover"
-                                    src="/images/hero-card-complete.jpeg"
-                                    width={270}
-                                />
-                            </CardBody>
-                        </Card>
+                    {eventList && eventList.map(event => (
+                        <EventCard
+                            key={event.id}
+                            title={event.title}
+                            start={new Date(event.startTime)}
+                            price={'400'}
+                            tag={'Bitch nigga'}
+                            address={'221B Baker St.'}
+                            img={event.poster}
+                        />
                     ))}
-                    <EventCard
-                        title={'Funky event'}
-                        start={new Date()}
-                        price={'400'}
-                        tag={'Bitch nigga'}
-                        address={'221B Baker St.'}
-                        img={'https://img.ticketsbox.com/cache/0x0/data/!!!!/duna.jpg_.webp'}
-                    />
                 </div>
                 <div className={'mt-12 grid w-full place-items-center'}>
                     <Button
