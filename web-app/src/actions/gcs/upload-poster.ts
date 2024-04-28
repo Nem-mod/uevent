@@ -1,5 +1,5 @@
-"use server"
-import {Storage} from "@google-cloud/storage";
+'use server';
+import { Storage } from '@google-cloud/storage';
 
 export async function uploadPoster(formData: FormData) {
     const file = formData.get('image') as File;
@@ -26,19 +26,7 @@ export async function uploadPoster(formData: FormData) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
-    await new Promise((resolve, reject) => {
-        const blob = bucket.file(filePath);
-        const blobStream = blob.createWriteStream({
-            resumable: false,
-        });
-
-        blobStream
-            .on("error", (err: Error) => reject(err))
-            .on("finish", () => resolve(true));
-
-        blobStream.end(buffer);
-    });
-
-    return true;
+    await bucket.file(filePath).save(Buffer.from(buffer))
+    await bucket.file(filePath).makePublic();
+    return `https://storage.googleapis.com/${bucketName}/${filePath}`;
 }
