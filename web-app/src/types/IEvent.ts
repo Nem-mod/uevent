@@ -8,12 +8,12 @@ export interface IEvent {
     poster: string;
 }
 
-interface IEventFormat {
+export interface IEventFormat {
     id: number;
     name: string;
 }
 
-interface IEventTheme {
+export interface IEventTheme {
     id: number;
     name: string
 }
@@ -35,13 +35,13 @@ export interface IEventGetRes extends IEvent{
 
 
 export interface ICreateEventAndTickets {
-    organizationId: number;
     title: string;
     description: string;
-    format: IEventFormat;
+    format: IEventFormat | number;
+    themes: IEventTheme[] | number[];
     startTime: Date;
     duration: number; // s? ms? m? h?
     poster: string; // url to event poster
-    location: string;
-    tickets: ICreateEventTicket[];
+    location?: string;
+    tickets?: ICreateEventTicket[];
 }
