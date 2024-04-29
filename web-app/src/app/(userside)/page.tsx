@@ -6,14 +6,21 @@ import { IEventsGetWithPagination } from '@/types/IEvent';
 import { PAGINATION_OFFSET } from '@/constants/pagination';
 
 async function fetchEvents(): Promise<IEventsGetWithPagination> {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
-        + `offset=${PAGINATION_OFFSET}`,
-        {
-            cache: 'no-cache',
-        },
-    );
-    return await response.json();
+    try {
+
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
+            + `offset=${PAGINATION_OFFSET}`,
+            {
+                cache: 'no-cache',
+            },
+        );
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+    return { count: 0, data: [] };
 }
 
 export default async function Home() {
