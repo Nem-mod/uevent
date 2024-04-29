@@ -17,9 +17,10 @@ import {
 import { Button } from '@nextui-org/button';
 import { uploadPoster } from '@/actions/gcs/upload-poster';
 import { useOrganizationProvider } from '@/providers/OrganizationProvider';
-import { ICreateEventAndTickets, IEventFormat } from '@/types/IEvent';
+import { ICreateEventAndTickets } from '@/types/event.types';
 import TicketForm from '@/components/organization/TicketForm/TicketForm';
 import { eventService } from '@/services/event.service';
+import { IEventFormat } from '@/types/theme-format.types';
 
 const formats: IEventFormat[] = [
     {
@@ -36,6 +37,7 @@ function Page() {
     const [startTime, setStartTime] = useState<ZonedDateTime>(now(getLocalTimeZone()));
     const [duration, setDuration] = useState<number>(1);
     const [format, setFormat] = useState<number>();
+    const [themes, setThemes] = useState<number[]>();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

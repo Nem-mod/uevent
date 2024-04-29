@@ -1,4 +1,6 @@
-export interface IEvent {
+import { IEventFormat, IEventTheme } from '@/types/theme-format.types';
+
+export interface EventTypes {
     id: string | number;
     title: string;
     description: string;
@@ -8,15 +10,6 @@ export interface IEvent {
     poster: string;
 }
 
-export interface IEventFormat {
-    id: number;
-    name: string;
-}
-
-export interface IEventTheme {
-    id: number;
-    name: string
-}
 
 export interface ICreateEventTicket {
     type:  string;
@@ -25,7 +18,7 @@ export interface ICreateEventTicket {
     amount: number;
 }
 
-export interface IEventGetRes extends IEvent{
+export interface IEventGetRes extends EventTypes{
     organization: {
         id: string;
     };
