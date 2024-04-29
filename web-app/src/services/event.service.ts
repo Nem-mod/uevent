@@ -1,5 +1,5 @@
 import { axiosWithAuth } from '@/api/interseptors';
-import { ICreateEventAndTickets } from '@/types/IEvent';
+import { ICreateEventAndTickets } from '@/types/event.types';
 
 export const eventService = {
     async createEvent(data: ICreateEventAndTickets, orgId: number | string) {

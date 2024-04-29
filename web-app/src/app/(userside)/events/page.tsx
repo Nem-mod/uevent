@@ -1,7 +1,7 @@
 import EventSearchForm from '@/components/core/EventSearchForm/EventSearchForm';
 import EventList from '@/components/core/EventList/EventList';
 import EventListPagination from '@/components/core/EventListPagination/EventListPagination';
-import { IEventsGetWithPagination } from '@/types/IEvent';
+import { IEventsGetWithPagination } from '@/types/event.types';
 import { PAGINATION_OFFSET } from '@/constants/pagination';
 import { countPaginationPages } from '@/utils/count-pagination-pages';
 

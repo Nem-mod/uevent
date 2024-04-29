@@ -21,10 +21,10 @@ import {
     ChevronDown,
 } from '@nextui-org/shared-icons';
 import { Dropdown, DropdownTrigger } from '@nextui-org/dropdown';
-import { authService } from '@/services/auth.service';
 import { IUserRegisterAndAuthRes } from '@/types/user.types';
 import { organizationService } from '@/services/organization.service';
 import { IOrganization } from '@/types/organization.types';
+import { useUserProvider } from '@/providers/UserProvider';
 
 const icons = {
     chevron: <ChevronDown fill='currentColor' size={16} />,
@@ -38,21 +38,15 @@ const icons = {
 
 export function CustomNavBar() {
     const [_, setIsMenuOpen] = useState(false);
-    const [user, setUser] = useState<IUserRegisterAndAuthRes | null>();
+    const user: IUserRegisterAndAuthRes | null = useUserProvider();
     const [organizations, setOrganizations] = useState<IOrganization[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        authService.getMe().then(res => {
-            setUser(res);
-            setIsLoading(false);
-        }).catch(() => {
-            setUser(null);
-            setIsLoading(false);
-        });
         organizationService.getAllOrganizations().then(res => {
             setOrganizations(res);
         }).catch(err => console.log(err));
-    }, []);
+    }, [])
+
     return (
         <Navbar
             className={'bg-accent'}
@@ -124,10 +118,10 @@ export function CustomNavBar() {
 
             </NavbarContent>
             <NavbarContent justify='end'>
-                {!isLoading && (user ? (
+                {(user ? (
                     <NavbarItem className='hidden lg:flex'>
                         <Link href={'/profile'} className={'text-secondary'}>
-                            {user.email}
+                            {user?.email}
                         </Link>
                     </NavbarItem>
                 ) : (

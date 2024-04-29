@@ -6,7 +6,6 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button} from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
-import Box from "@/components/utils/Box/Box";
 import {Link} from "@nextui-org/react";
 import {IUserAuthForm} from "@/types/user.types";
 import {authService} from "@/services/auth.service";
@@ -31,6 +30,7 @@ function LoginForm() {
         try {
             await authService.login(data);
             router.push(`/`);
+            router.refresh();
         } catch (error) {
             if (error instanceof Error)
                 setError('root', {type: 'custom', message: error.message});

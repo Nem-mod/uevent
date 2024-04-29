@@ -2,7 +2,7 @@
 
 import Box from '@/components/utils/Box/Box';
 import { Button } from '@nextui-org/react';
-import { IEventGetRes } from '@/types/IEvent';
+import { IEventGetRes } from '@/types/event.types';
 import { redirect } from 'next/navigation';
 
 interface Props {

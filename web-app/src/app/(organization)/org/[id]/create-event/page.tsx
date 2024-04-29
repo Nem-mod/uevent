@@ -13,32 +13,35 @@ import {
     Select,
     SelectItem,
     useDisclosure,
+    Selection
 } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { uploadPoster } from '@/actions/gcs/upload-poster';
 import { useOrganizationProvider } from '@/providers/OrganizationProvider';
-import { ICreateEventAndTickets, IEventFormat } from '@/types/IEvent';
+import { ICreateEventAndTickets, ICreateEventTicket } from '@/types/event.types';
 import TicketForm from '@/components/organization/TicketForm/TicketForm';
 import { eventService } from '@/services/event.service';
-
-const formats: IEventFormat[] = [
-    {
-        id: 1,
-        name: 'Concert',
-    },
-];
+import { useThemesAndFormatsProvider } from '@/providers/ThemesAndFormatsProvider';
+import { useRouter } from 'next/navigation';
 
 function Page() {
+    const router = useRouter();
     const organizationId = useOrganizationProvider();
+    const themesAndFormats = useThemesAndFormatsProvider();
+
+    if (!themesAndFormats)
+        return <></>
+
+    const { formatList, themesList} = themesAndFormats;
     const [posterImg, setPosterImg] = useState<File>();
     const [title, setTitle] = useState<string>();
     const [description, setDescription] = useState<string>();
     const [startTime, setStartTime] = useState<ZonedDateTime>(now(getLocalTimeZone()));
     const [duration, setDuration] = useState<number>(1);
     const [format, setFormat] = useState<number>();
-
+    const [themes, setThemes] = useState<Set<number>>();
+    const [tickets, setTickets] = useState<ICreateEventTicket[]>();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
     const uploadFile = async () => {
         if (!posterImg)
             return;
@@ -56,23 +59,25 @@ function Page() {
         e.preventDefault();
         const imgURL = await uploadFile();
 
-        if (!imgURL || !title || !description || !format || !startTime)
+        if (!imgURL || !title || !description || !format || !startTime || !themes || tickets?.length === 0)
             return;
 
+        console.log(tickets);
+        // @ts-ignore
+        const themesArray = [...themes].map(e => Number(e));
         const data: ICreateEventAndTickets = {
             title: title,
             description: description,
             startTime: startTime.toDate(),
             duration: duration,
             format: format,
-            // FIXME: Add new input for themes
-            themes: [1, 2],
-            poster: imgURL
+            themes: themesArray,
+            poster: imgURL,
+            tickets: tickets
         }
-        const res =await eventService.createEvent(data, organizationId);
-        console.log(res);
+        const res = await eventService.createEvent(data, organizationId);
+        router.push('/');
     };
-
 
     return (
         <div className={'w-full flex flex-row'}>
@@ -140,10 +145,35 @@ function Page() {
                                 selectedKeys={format ? [format] : []}
                                 onChange={(e) => setFormat(+e.target.value)}
                             >
-                                {formats &&
-                                    formats.map((format) => (
+                                {formatList &&
+                                    formatList.map((format) => (
                                         <SelectItem className={'text-black'} key={format.id} value={format.id}>
                                             {format.name}
+                                        </SelectItem>
+                                    ))}
+                            </Select>
+
+                            <Select
+                                isRequired={true}
+                                selectionMode={'multiple'}
+                                label={'Themes'}
+                                placeholder={'Select event themes'}
+                                variant={'underlined'}
+                                color={'primary'}
+                                size={'lg'}
+                                // selectedKeys={format ? [format] : []}
+                                // onChange={(e) => console.log(+e.target.value)}
+                                onSelectionChange={(keys: Selection) => setThemes(keys as Set<number>)}
+                            >
+                                {themesList &&
+                                    themesList.map((theme) => (
+                                        <SelectItem
+                                            className={'text-black'}
+                                            key={theme.id}
+                                            value={theme.id}
+                                            onSelect={(e) => console.log(e)}
+                                        >
+                                            {theme.name}
                                         </SelectItem>
                                     ))}
                             </Select>
@@ -168,7 +198,7 @@ function Page() {
                 </div>
             </div>
 
-            <TicketForm />
+            <TicketForm setEventTickets={setTickets} />
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (

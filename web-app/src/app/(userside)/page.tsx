@@ -2,18 +2,24 @@ import Slider from '@/components/core/Slider/Slider';
 import { Button } from '@nextui-org/button';
 import { Link } from '@nextui-org/react';
 import EventCard from '@/components/core/EventCard/EventCard';
-import { IEventsGetWithPagination } from '@/types/IEvent';
+import { IEventsGetWithPagination } from '@/types/event.types';
 import { PAGINATION_OFFSET } from '@/constants/pagination';
 
 async function fetchEvents(): Promise<IEventsGetWithPagination> {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
-        + `offset=${PAGINATION_OFFSET}`,
-        {
-            cache: 'no-cache',
-        },
-    );
-    return await response.json();
+    try {
+
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
+            + `offset=${PAGINATION_OFFSET}`,
+            {
+                cache: 'no-cache',
+            },
+        );
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+    return { count: 0, data: [] };
 }
 
 export default async function Home() {
