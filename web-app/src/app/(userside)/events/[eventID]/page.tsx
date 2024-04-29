@@ -24,10 +24,10 @@ async function getEvent(id: number | string) {
 async function Page({ params }: Props) {
     const someFetchedEvent: IEventGetRes = await getEvent(params.eventID);
     return (
-        <Box className={'flex max-h-screen gap-20 p-10'}>
-            <div className={'w-1/3 p-0 '}>
+        <Box className={'flex gap-20 p-10 max-h-full h-full'}>
+            <div className={'w-1/3 p-0 flex'}>
                 <img
-                    className={'w-4/5 rounded-lg'}
+                    className={'rounded-lg object-cover'}
                     src={someFetchedEvent.poster}
                     alt={'You got 0 bitches'}
                 />

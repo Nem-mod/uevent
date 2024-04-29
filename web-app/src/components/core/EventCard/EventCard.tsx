@@ -13,11 +13,11 @@ interface CardTypes {
 
 function EventCard({title, start, price, tag, address, img, href}: CardTypes) {
     return (
-        <div className={'border-gray/70 max-w-md flex flex-row rounded-xl border-2 shadow-xl'}>
-            <Link href={href} className={''}>
-                <img className={'rounded-l-lg w-1/3'} src={img} alt="This is an image"/>
-                {/*<div className={'max-h-fit'}>*/}
-                {/*</div>*/}
+        <Link href={href} className={''}>
+            <div className={'border-gray/70 max-w-md flex flex-row rounded-xl border-2 shadow-xl'}>
+                <div className={'flex w-1/3'}>
+                    <img className={'object-cover rounded-l-xl'} src={img} alt="This is an image"/>
+                </div>
                 <div className={'flex flex-col gap-4 bg-transparent px-4 py-2 pl-8 pr-20'}>
                     <div className={'my-2 flex flex-col'}>
                         <span className={'text-l font-bold text-black text-xl'}>{title}</span>
@@ -33,8 +33,8 @@ function EventCard({title, start, price, tag, address, img, href}: CardTypes) {
                         <span className={'text-m text-gray-500'}>{price}</span>
                     </div>
                 </div>
-            </Link>
-        </div>
+            </div>
+        </Link>
     );
 }
 
