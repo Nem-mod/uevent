@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Textarea } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
 import { getKeyValue, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { ICreateEventTicket } from '@/types/event.types';
 
-const ticketTypes = [
-    {
-        key: "1",
-        description: "lorem ipsum dolor sit amen lorem ipsum dolor sit amen lorem ipsum dolor sit amen lorem ipsum dolor sit amen lorem ipsum dolor sit amen lorem ipsum dolor sit amen",
-        type: "Basic",
-        price: "400",
-        amount: '120',
-    },
-]
 
 const columns = [
     {
@@ -32,9 +24,12 @@ const columns = [
     },
 ];
 
+interface Props {
+    setEventTickets: (value: ICreateEventTicket[]) => void;
+}
 
-function TicketForm() {
-    const [ticketsTypes, setTicketsTypes] = useState(ticketTypes);
+function TicketForm({ setEventTickets }: Props ) {
+    const [ticketsTypes, setTicketsTypes] = useState<any[]>([]);
 
     const [selectedKeys, setSelectedKeys] = useState<Set<string>>();
 
@@ -50,15 +45,35 @@ function TicketForm() {
             type: type,
             price: price,
             amount: amount,
-            key: `${Number(ticketsTypes[ticketsTypes.length - 1].key) + 1}`
+            key: ticketsTypes.length ? `${Number(ticketsTypes[ticketsTypes.length - 1].key) + 1}` : 1
         }
 
-        setTicketsTypes([...ticketsTypes, reqBody])
+        setTicketsTypes([...ticketsTypes, reqBody]);
     }
+
+    useEffect(() => {
+        const eventTickets: ICreateEventTicket[] = ticketsTypes.map(e => {
+            return {
+                ticket: {
+                    description: e.description,
+                    type: e.type,
+                    cost: Number(e.price) * 100,
+                },
+                amount: Number(e.amount),
+            };
+        });
+        setEventTickets(eventTickets);
+    }, [ticketsTypes])
 
     // TODO: ADD LOGIC
     const handleDelete = () => {
-        console.log(selectedKeys)
+        if (!selectedKeys)
+            return;
+
+        if (selectedKeys as any === 'all') {
+            setTicketsTypes([]);
+            return;
+        }
         const deleted = ticketsTypes.filter(e => {
             return !(selectedKeys && selectedKeys.has(e.key))
         })

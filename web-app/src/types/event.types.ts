@@ -12,13 +12,15 @@ export interface EventTypes {
 
 
 export interface ICreateEventTicket {
-    type:  string;
-    description: string;
-    cost: number;
-    amount: number;
+    ticket: {
+        type: string;
+        description: string;
+        cost: number;
+    };
+    amount: number
 }
 
-export interface IEventGetRes extends EventTypes{
+export interface IEventGetRes extends EventTypes {
     organization: {
         id: string;
     };
