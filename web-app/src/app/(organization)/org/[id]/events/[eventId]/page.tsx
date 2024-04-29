@@ -3,32 +3,105 @@
 import { Button } from '@nextui-org/button';
 import Box from "@/components/utils/Box/Box";
 import {DatePicker} from "@nextui-org/date-picker";
-import {now, getLocalTimeZone} from "@internationalized/date";
+import {parseDateTime} from "@internationalized/date";
 import {Input, Textarea} from "@nextui-org/input";
 import React, {useState} from "react";
-import {Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
+import {
+    getKeyValue,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    Pagination, Table, TableBody, TableCell, TableColumn,
+    TableHeader, TableRow,
+    useDisclosure
+} from "@nextui-org/react";
+import {ICreateEventAndTickets} from "@/types/event.types";
+
+
 
 function Page() {
-    const someFetchedEvent = {
+    const someFetchedEvent: ICreateEventAndTickets = {
         title: 'VIP event (No bitches)',
-        description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet asperiores aut blanditiis, cum deleniti dicta facere illo, illum inventore maiores mollitia non provident, quisquam sequi sunt suscipit tempore temporibus ullam!',
-        startTime: now(getLocalTimeZone()),
-        duration: '120',
-        price: '400',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet asperiores aut blanditiis, cum deleniti dicta facere illo, illum inventore maiores mollitia non provident, quisquam sequi sunt suscipit tempore temporibus ullam!',
+        startTime: '2022-02-03T09:15',
+        duration: 120,
         location: '221B Baker Street',
         poster: 'https://img.ticketsbox.com/cache/0x0/data/!!!!/duna.jpg_.webp',
+        format: {
+            id: 1,
+            name: 'Movie'
+        },
+        themes: [
+            {
+                id: 1,
+                name: 'Action'
+            },
+            {
+                id: 2,
+                name: 'Thriller'
+            }
+        ],
+        tickets: [
+            {
+                ticket: {
+                    type: 'Basic',
+                    description: 'A ticket for basic middle row seat',
+                    cost: 140,
+                },
+                amount: 80
+            },
+            {
+                ticket: {
+                    type: 'VIP',
+                    description: 'VIP ticket back seats with additional bitches',
+                    cost: 300
+                },
+                amount: 20
+            }
+        ]
     };
+
+    let i = 0;
+    const parsedEvent = {
+        title: someFetchedEvent.title,
+        startTime: parseDateTime(someFetchedEvent.startTime),
+        duration: `${someFetchedEvent.duration}`,
+        description: someFetchedEvent.description,
+        poster: someFetchedEvent.poster,
+        tickets: [someFetchedEvent.tickets?.forEach(ticket => {
+            i++;
+            return {
+                type: ticket.ticket.type,
+                description: ticket.ticket.description,
+                cost: `${ticket.ticket.cost}`,
+                amount: `${ticket.amount}`,
+                id: `${i}`
+            }
+        })],
+
+    }
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     const [isEdit, setIsEdit] = useState(false);
 
-    const [title, setTitle] = useState(someFetchedEvent.title)
-    const [date, setDate] = useState(someFetchedEvent.startTime);
-    const [duration, setDuration] = useState(someFetchedEvent.duration);
-    const [price, setPrice] = useState(someFetchedEvent.price);
-    const [description, setDescription] = useState(someFetchedEvent.description);
+    const [title, setTitle] = useState(parsedEvent.title)
+    const [date, setDate] = useState(parsedEvent.startTime);
+    const [duration, setDuration] = useState(parsedEvent.duration);
+    const [description, setDescription] = useState(parsedEvent.description);
+    const [ticketsConst, setTicketsConst] = useState(
+        [someFetchedEvent.tickets?.forEach(ticket => {
+        i++;
+        return {
+            type: ticket.ticket.type,
+            description: ticket.ticket.description,
+            cost: `${ticket.ticket.cost}`,
+            amount: `${ticket.amount}`,
+            id: `${i}`
+        }
+    })]);
 
 
     // TODO: ADD LOGIC
@@ -43,20 +116,38 @@ function Page() {
             startDate: date,
             description: description,
             duration: Number(duration),
-            price: Number(price)
+            // price: Number(tickets)
         }
         console.log(reqBody);
     }
 
     const handleEdit = () => {
         if (isEdit) {
-            setTitle(someFetchedEvent.title);
-            setDescription(someFetchedEvent.description);
-            setDuration(someFetchedEvent.duration);
-            setPrice(someFetchedEvent.price);
+            setTitle(parsedEvent.title);
+            setDescription(parsedEvent.description);
+            setDuration(parsedEvent.duration);
         }
         setIsEdit(!isEdit)
     }
+
+    const columns = [
+        {
+            key: "type",
+            label: "TYPE",
+        },
+        {
+            key: "description",
+            label: "DESCRIPTION",
+        },
+        {
+            key: "cost",
+            label: "COST",
+        },
+        {
+            key: "amount",
+            label: "AMOUNT",
+        },
+    ];
 
     return (
         <Box className={'flex max-h-screen gap-20 p-10'}>
@@ -92,7 +183,7 @@ function Page() {
             <div className={'w-1/3 p-0 '}>
                 <img
                     className={'w-4/5 rounded-lg'}
-                    src={someFetchedEvent.poster}
+                    src={parsedEvent.poster}
                     alt={'You got 0 bitches'}
                 />
             </div>
@@ -118,13 +209,6 @@ function Page() {
                     className={'text-3xl font-extrabold text-black'}
                     value={duration}
                     onValueChange={setDuration}
-                    isDisabled={!isEdit}
-                />
-                <Input
-                    type={'number'} label={'Price'}
-                    className={'text-3xl font-extrabold text-black'}
-                    value={price}
-                    onValueChange={setPrice}
                     isDisabled={!isEdit}
                 />
 
@@ -158,6 +242,29 @@ function Page() {
                             Delete event
                         </Button>
                     </div>
+                    <span className={'text-xl font-bold text-gray-700'}>Tickets:</span>
+                    <Table
+                        aria-label="Example empty table"
+                        className={'mt-4'}
+                    >
+                        <TableHeader columns={columns}>
+                            {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+                        </TableHeader>
+                        <TableBody items={ticketsConst as any}>
+                            {(item) => (
+                                <TableRow
+                                    key={item.id}
+                                    className={'bg-accent text-white rounded-md'}
+                                >
+                                    {(columnKey) => <TableCell
+                                        className={'text-black'}
+                                    >
+                                        {getKeyValue(item, columnKey)}
+                                    </TableCell>}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
                     <Button
                         onClick={handleSubmitEdit}
                         className={!isEdit ? "hidden" :

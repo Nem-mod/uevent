@@ -1,12 +1,64 @@
 'use client'
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Link} from "@nextui-org/react";
-import {useState} from "react";
+import {
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    Pagination,
+    Link,
+    getKeyValue
+} from "@nextui-org/react";
+import React, {useState} from "react";
 import {Button} from "@nextui-org/button";
 
 function Page() {
     const [page, setPage] = useState(1);
 
     const pages = 12
+
+    const columns = [
+        {
+            key: "title",
+            label: "TITLE",
+        },
+        {
+            key: "startTime",
+            label: "START TIME",
+        },
+        {
+            key: "duration",
+            label: "DURATION",
+        },
+    ];
+
+    const [members, setMembers] = useState([
+        {
+            id: "1",
+            title: "Dune",
+            startTime: "CEO",
+            duration: "Active",
+        },
+        {
+            id: "2",
+            title: "Zoey Lang",
+            startTime: "Technical Lead",
+            duration: "Paused",
+        },
+        {
+            id: "3",
+            title: "Jane Fisher",
+            startTime: "Senior Developer",
+            duration: "Active",
+        },
+        {
+            id: "4",
+            title: "William Howard",
+            startTime: "Community Manager",
+            duration: "Vacation",
+        },
+    ]);
 
     return (
         <div className={'text-black'}>
@@ -33,32 +85,22 @@ function Page() {
                     ) : null
                 }
             >
-                <TableHeader>
-                    <TableColumn>NAME</TableColumn>
-                    <TableColumn>ROLE</TableColumn>
-                    <TableColumn>STATUS</TableColumn>
+                <TableHeader columns={columns}>
+                    {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody emptyContent={"No rows to display."}>
-                    <TableRow key="1">
-                        <TableCell>Tony Reichert</TableCell>
-                        <TableCell>CEO</TableCell>
-                        <TableCell>Active</TableCell>
-                    </TableRow>
-                    <TableRow key="2" href={'#'} className={'bg-accent text-white rounded-md'}>
-                        <TableCell>Zoey Lang</TableCell>
-                        <TableCell>Technical Lead</TableCell>
-                        <TableCell>Paused</TableCell>
-                    </TableRow>
-                    <TableRow key="3">
-                        <TableCell>Jane Fisher</TableCell>
-                        <TableCell>Senior Developer</TableCell>
-                        <TableCell>Active</TableCell>
-                    </TableRow>
-                    <TableRow key="4">
-                        <TableCell>William Howard</TableCell>
-                        <TableCell>Community Manager</TableCell>
-                        <TableCell>Vacation</TableCell>
-                    </TableRow>
+                <TableBody items={members}>
+                    {(item) => (
+                        <TableRow
+                            key={item.id}
+                            className={'bg-accent text-white rounded-md'}
+                        >
+                            {(columnKey) => <TableCell
+                                className={'text-black'}
+                            >
+                                {getKeyValue(item, columnKey)}
+                            </TableCell>}
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </div>

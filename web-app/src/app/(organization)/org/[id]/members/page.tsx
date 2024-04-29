@@ -127,7 +127,10 @@ function Page() {
                 </TableHeader>
                 <TableBody items={members}>
                     {(item) => (
-                        <TableRow key={item.key}>
+                        <TableRow
+                            key={item.key}
+                            className={'bg-accent text-white rounded-md'}
+                        >
                             {(columnKey) => <TableCell
                                 className={'text-black'}
                             >

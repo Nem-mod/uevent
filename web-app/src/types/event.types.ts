@@ -38,7 +38,7 @@ export interface ICreateEventAndTickets {
     description: string;
     format: IEventFormat | number;
     themes: IEventTheme[] | number[];
-    startTime: Date;
+    startTime: string;
     duration: number; // s? ms? m? h?
     poster: string; // url to event poster
     location?: string;
