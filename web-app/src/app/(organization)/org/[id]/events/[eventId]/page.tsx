@@ -7,7 +7,7 @@ import {parseDateTime} from "@internationalized/date";
 import {Input, Textarea} from "@nextui-org/input";
 import React, {useState} from "react";
 import {
-    getKeyValue,
+    getKeyValue, Link,
     Modal,
     ModalBody,
     ModalContent,
@@ -65,22 +65,22 @@ function Page() {
 
     let i = 0;
     const parsedEvent = {
-        title: someFetchedEvent.title,
+        ...someFetchedEvent,
+        // title: someFetchedEvent.title,
         startTime: parseDateTime(someFetchedEvent.startTime),
         duration: `${someFetchedEvent.duration}`,
-        description: someFetchedEvent.description,
-        poster: someFetchedEvent.poster,
-        tickets: [someFetchedEvent.tickets?.forEach(ticket => {
+        // description: someFetchedEvent.description,
+        // poster: someFetchedEvent.poster,
+        tickets: [someFetchedEvent.tickets?.map(ticket => {
             i++;
             return {
                 type: ticket.ticket.type,
                 description: ticket.ticket.description,
                 cost: `${ticket.ticket.cost}`,
                 amount: `${ticket.amount}`,
-                id: `${i}`
+                id: `1`
             }
         })],
-
     }
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -92,16 +92,15 @@ function Page() {
     const [duration, setDuration] = useState(parsedEvent.duration);
     const [description, setDescription] = useState(parsedEvent.description);
     const [ticketsConst, setTicketsConst] = useState(
-        [someFetchedEvent.tickets?.forEach(ticket => {
-        i++;
+        someFetchedEvent.tickets?.map(ticket => {
         return {
             type: ticket.ticket.type,
             description: ticket.ticket.description,
             cost: `${ticket.ticket.cost}`,
             amount: `${ticket.amount}`,
-            id: `${i}`
+            id: `1`
         }
-    })]);
+    }));
 
 
     // TODO: ADD LOGIC
@@ -211,7 +210,30 @@ function Page() {
                     onValueChange={setDuration}
                     isDisabled={!isEdit}
                 />
-
+                <div className={'flex'}>
+                    <div className={'flex flex-col gap-3 py-2 pr-10 mt-1'}>
+                        <span className={'text-lg text-gray-700'}>Format:</span>
+                        <span className={'text-lg text-gray-700'}>Themes:</span>
+                    </div>
+                    <div className={'flex flex-col gap-2 py-2'}>
+                        <div className={'p-1 px-2 rounded-xl bg-secondary/20 w-fit'}>
+                            <Link className={'text-bold text-lg text-black'}>
+                                {parsedEvent.format.name}
+                            </Link>
+                        </div>
+                        <div className={'flex gap-2'}>
+                            {parsedEvent.themes.map(theme => {
+                                return(
+                                    <div className={'p-1 px-2 rounded-xl bg-secondary/20'}>
+                                        <Link className={'text-bold text-lg text-black'}>
+                                            {theme.name}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                </div>
                 <span className={'text-xl font-bold text-gray-700'}>Description:</span>
                 <div className={''}>
                     <Textarea
@@ -223,7 +245,16 @@ function Page() {
                     />
                 </div>
                 <div className={'mr-auto flex flex-col gap-4'}>
-                    <div className={'flex gap-4'}>
+                    <div className={'flex gap-4 flex-row-reverse'}>
+                        <Button
+                            onClick={onOpen}
+                            color={'danger'}
+                            className={
+                            'h-12 border text-white ' +
+                            'text-lg font-semibold w-1/3'
+                        }>
+                            Delete event
+                        </Button>
                         <Button
                             onClick={handleEdit}
                             className={
@@ -233,13 +264,13 @@ function Page() {
                             {isEdit ? "Cancel" : "Edit event"}
                         </Button>
                         <Button
-                            onClick={onOpen}
-                            color={'danger'}
-                            className={
-                            'ml-auto h-12 border text-white ' +
-                            'text-lg font-semibold w-1/3'
-                        }>
-                            Delete event
+                            onClick={handleSubmitEdit}
+                            className={!isEdit ? "hidden" :
+                                'h-12 border border-primary bg-accent text-white hover:bg-accent ' +
+                                'text-lg font-semibold hover:border-accent hover:text-white w-1/3'
+                            }
+                        >
+                            Save changes
                         </Button>
                     </div>
                     <span className={'text-xl font-bold text-gray-700'}>Tickets:</span>
@@ -250,11 +281,11 @@ function Page() {
                         <TableHeader columns={columns}>
                             {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                         </TableHeader>
-                        <TableBody items={ticketsConst as any}>
+                        <TableBody items={ticketsConst}>
                             {(item) => (
                                 <TableRow
                                     key={item.id}
-                                    className={'bg-accent text-white rounded-md'}
+                                    className={''}
                                 >
                                     {(columnKey) => <TableCell
                                         className={'text-black'}
@@ -265,15 +296,7 @@ function Page() {
                             )}
                         </TableBody>
                     </Table>
-                    <Button
-                        onClick={handleSubmitEdit}
-                        className={!isEdit ? "hidden" :
-                            'h-12 border border-primary bg-accent text-white hover:bg-accent ' +
-                            'text-lg font-semibold hover:border-accent hover:text-white w-1/3'
-                        }
-                    >
-                        Save changes
-                    </Button>
+
                 </div>
             </div>
         </Box>
