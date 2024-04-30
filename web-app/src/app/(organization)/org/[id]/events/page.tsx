@@ -10,13 +10,26 @@ import {
     Link,
     getKeyValue
 } from "@nextui-org/react";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@nextui-org/button";
+import {useOrganizationProvider} from "@/providers/OrganizationProvider";
+import {organizationService} from "@/services/organization.service";
+import {IEventGetRes} from "@/types/event.types";
 
 function Page() {
     const [page, setPage] = useState(1);
 
     const pages = 12
+
+    const orgID = useOrganizationProvider();
+
+    const [events, setEvents] = useState<IEventGetRes[]>()
+
+    useEffect(() => {
+        organizationService.getAllOrgEvents(orgID).then(res => {
+            setEvents(res.data)
+        })
+    }, []);
 
     const columns = [
         {
@@ -33,32 +46,6 @@ function Page() {
         },
     ];
 
-    const [members, setMembers] = useState([
-        {
-            id: "1",
-            title: "Dune",
-            startTime: "CEO",
-            duration: "Active",
-        },
-        {
-            id: "2",
-            title: "Zoey Lang",
-            startTime: "Technical Lead",
-            duration: "Paused",
-        },
-        {
-            id: "3",
-            title: "Jane Fisher",
-            startTime: "Senior Developer",
-            duration: "Active",
-        },
-        {
-            id: "4",
-            title: "William Howard",
-            startTime: "Community Manager",
-            duration: "Vacation",
-        },
-    ]);
 
     return (
         <div className={'text-black'}>
@@ -66,7 +53,7 @@ function Page() {
                 <h1 className={'text-4xl'}>Events</h1>
                 <Button className={'bg-accent text-white'} as={Link}  href={'create-event'}>Add new event</Button>
             </div>
-            <Table
+            {events && <Table
                 aria-label="Example empty table"
                 className={'mt-4'}
                 bottomContent={
@@ -88,9 +75,10 @@ function Page() {
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody items={members}>
+                <TableBody items={events}>
                     {(item) => (
                         <TableRow
+                            href={`/org/${orgID}/events/${item.id}`}
                             key={item.id}
                             className={'bg-accent text-white rounded-md'}
                         >
@@ -102,7 +90,7 @@ function Page() {
                         </TableRow>
                     )}
                 </TableBody>
-            </Table>
+            </Table>}
         </div>
     );
 }

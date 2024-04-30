@@ -38,10 +38,11 @@ export default async function Home() {
                             key={event.id}
                             title={event.title}
                             start={new Date(event.startTime)}
-                            price={'400'}
-                            tag={'Bitch nigga'}
-                            address={'221B Baker St.'}
+                            format={event.format}
+                            themes={event.themes}
+                            location={event.location}
                             img={event.poster}
+                            href={`/events/${event.id}`}
                         />
                     ))}
                 </div>
