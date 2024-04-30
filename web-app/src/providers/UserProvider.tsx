@@ -2,16 +2,18 @@
 import React, { createContext, useContext } from 'react';
 import { IUserRegisterAndAuthRes } from '@/types/user.types';
 
-const UserContext = createContext<IUserRegisterAndAuthRes | null>(null);
+type useUserHook = (value: any) => void;
+
+const UserContext = createContext<[IUserRegisterAndAuthRes | null , useUserHook | null]>([null, null]);
 
 export function useUserProvider() {
     return useContext(UserContext);
 }
 
 
-function OrganizationProvider({ children, user } : { children: React.ReactNode, user?: IUserRegisterAndAuthRes | null}) {
+function OrganizationProvider({ children, user, hook } : { children: React.ReactNode, hook: useUserHook, user?: IUserRegisterAndAuthRes | null }) {
     return (
-        <UserContext.Provider value={user || null}>
+        <UserContext.Provider value={[user || null, hook]}>
             { children }
         </UserContext.Provider>
     );

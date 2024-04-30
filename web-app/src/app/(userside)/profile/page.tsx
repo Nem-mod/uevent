@@ -8,27 +8,27 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/auth.service';
 import { IUserRegisterAndAuthRes } from '@/types/user.types';
+import { useUserProvider } from '@/providers/UserProvider';
 
 function Page() {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const router = useRouter();
-    const [user, setUser] = useState<IUserRegisterAndAuthRes>();
+    const [user, setUser] = useUserProvider();
 
-    useEffect(() => {
-        authService.getMe().then((res) => {
-            setUser(res);
-        });
-    }, []);
-
-    // TODO: add logic
-    const handleDelete = (e) => {
-        e.preventDefault();
-
+    const handleDelete = () => {
         console.log('Account deleted');
         router.replace('/');
     };
 
+    const handleLogOut = async () => {
+        authService.logout().then(() => {
+            if (setUser) {
+                setUser(null);
+            }
+            router.push('/');
+        })
+    };
     const columns = [
         {
             key: 'title',
@@ -115,6 +115,16 @@ function Page() {
                             }
                         >
                             Delete Account
+                        </Button>
+                        <Button
+                            onClick={handleLogOut}
+                            color={'danger'}
+                            className={
+                                'mt-auto ml-auto h-12 text-white ' +
+                                'w-fit text-lg font-semibold hover:border-accent hover:text-white'
+                            }
+                        >
+                            Log out
                         </Button>
                         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                             <ModalContent>

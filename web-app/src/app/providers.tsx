@@ -24,14 +24,19 @@ export function Providers({ children }: ProvidersProps) {
             setUser(res);
         }).catch(() => {
         });
-        themesFormatsService.getThemesAndFormats().then(res => {
-            setThemesAndFormats(res);
-        }).catch();
     }, []);
+
+    useEffect(() => {
+        return () => {
+            themesFormatsService.getThemesAndFormats().then(res => {
+                setThemesAndFormats(res);
+            });
+        };
+    }, [user]);
 
     return (
         <NextUIProvider navigate={router.push}>
-            <UserProvider user={user}>
+            <UserProvider user={user} hook={setUser}>
                 <ThemesAndFormatsProvider data={themesAndFormats}>
                     {children}
                 </ThemesAndFormatsProvider>
