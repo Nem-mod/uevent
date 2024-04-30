@@ -19,10 +19,9 @@ function Layout({ children, params: { id } }: Props) {
     useEffect(() => {
         organizationService.getAllOrganizations().then(res => {
             const org = res.find(obj => obj.id == id);
-            if (!org) {
-                router.push('/');
-            }
             setOrganization(org);
+        }).catch(() => {
+            router.refresh()
         });
     }, []);
 

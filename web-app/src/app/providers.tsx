@@ -24,10 +24,15 @@ export function Providers({ children }: ProvidersProps) {
             setUser(res);
         }).catch(() => {
         });
-        themesFormatsService.getThemesAndFormats().then(res => {
-            setThemesAndFormats(res);
-        }).catch();
     }, []);
+
+    useEffect(() => {
+        return () => {
+            themesFormatsService.getThemesAndFormats().then(res => {
+                setThemesAndFormats(res);
+            });
+        };
+    }, [user]);
 
     return (
         <NextUIProvider navigate={router.push}>

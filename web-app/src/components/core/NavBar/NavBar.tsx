@@ -44,8 +44,10 @@ export function CustomNavBar() {
     useEffect(() => {
         organizationService.getAllOrganizations().then(res => {
             setOrganizations(res);
-        }).catch(err => console.log(err));
-    }, [])
+        }).catch(err => {
+            setOrganizations([])
+        });
+    }, [user])
 
     return (
         <Navbar

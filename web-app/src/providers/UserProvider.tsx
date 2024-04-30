@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from 'react';
 import { IUserRegisterAndAuthRes } from '@/types/user.types';
 
-type useUserHook = (value: IUserRegisterAndAuthRes | null) => void;
+type useUserHook = (value: any) => void;
 
 const UserContext = createContext<[IUserRegisterAndAuthRes | null , useUserHook | null]>([null, null]);
 
