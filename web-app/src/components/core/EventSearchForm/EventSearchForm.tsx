@@ -28,7 +28,7 @@ function EventSearchForm({ className }: Props) {
                 </div>
                 <div className={'flex gap-5'}>
                     <EventDatePicker />
-                    <EventFormatPicker formats={['Concert', 'Gallery']} />
+                    <EventFormatPicker />
                 </div>
             </div>
         </div>

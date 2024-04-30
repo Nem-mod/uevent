@@ -1,24 +1,18 @@
 'use client';
 import React, { useState } from 'react';
-import {
-    Button,
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-    Select,
-    SelectItem,
-} from '@nextui-org/react';
+import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem } from '@nextui-org/react';
 import { ChevronDownIcon } from '@nextui-org/shared-icons';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useThemesAndFormatsProvider } from '@/providers/ThemesAndFormatsProvider';
 
 interface Props {
     onSubmit?: (data: any) => void;
     title?: string;
-    formats: string[];
 }
 
 // FIXME: fix select state after reload the page
-function EventFormatPicker({ title, formats }: Props) {
+function EventFormatPicker({ title }: Props) {
+    const { formatList } = useThemesAndFormatsProvider() || { formatList: []};
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { replace } = useRouter();
@@ -37,8 +31,7 @@ function EventFormatPicker({ title, formats }: Props) {
         if (!selected) {
             params.delete('format');
         } else {
-            let formatSelected = encodeURIComponent(JSON.stringify(selected.split(',')));
-            params.set('format', formatSelected);
+            params.set('format', selected);
         }
 
         replace(`${pathname}?${params.toString()}`);
@@ -57,15 +50,15 @@ function EventFormatPicker({ title, formats }: Props) {
                     <div className="text-xl font-bold">Select event types</div>
                     <Select
                         onChange={(e) => handleChange(e)}
-                        label={'arial-label'}
+                        label={'Formats'}
                         className={'mt-6'}
                         placeholder="Select event formats"
                         selectionMode="multiple"
                     >
-                        {formats &&
-                            formats.map((format) => (
-                                <SelectItem className={'text-black'} key={format} value={format}>
-                                    {format}
+                        {formatList &&
+                            formatList.map((format) => (
+                                <SelectItem className={'text-black'} key={format.id} value={format.id}>
+                                    {format.name}
                                 </SelectItem>
                             ))}
                     </Select>
