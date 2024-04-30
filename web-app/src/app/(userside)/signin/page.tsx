@@ -10,9 +10,9 @@ function Page() {
                 <Box className={'flex flex-col flex-grow basis-1/2 justify-center bg-accent/15'}>
                     <LoginForm />
                 </Box>
-                <div className={'flex-grow basis-1/2'}>
-                    <h1 className={'text-xl font-bold text-black'}>Now you have</h1>
-                    <p className={'text-black'}>No bitches lmao</p>
+                <div className={'mt-6 flex-grow flex flex-col gap-6 basis-1/2'}>
+                    <h1 className={'text-4xl font-semibold text-black'}>Welcome to Multiverse!</h1>
+                    <p className={'text-2xl text-black'}>Please log in to access exclusive deals, manage your bookings, and enjoy a seamless ticket purchasing experience. Your entertainment journey starts here. Let's get started!</p>
                 </div>
             </div>
         </div>
