@@ -7,54 +7,39 @@ import {CalendarDateTime, parseDateTime} from "@internationalized/date";
 import {Input, Textarea} from "@nextui-org/input";
 import React, {useEffect, useState} from "react";
 import {
-    getKeyValue, Link,
-    Modal,
-    ModalBody,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
+    getKeyValue,
     Pagination, Table, TableBody, TableCell, TableColumn,
     TableHeader, TableRow,
     useDisclosure,
-    Select, SelectItem,
+    PropsOf,
 } from "@nextui-org/react";
 import {ICreateEventAndTickets, IEventGetRes} from "@/types/event.types";
 import {eventService} from "@/services/event.service";
+import {ITicket, ITicketsPaginated} from "@/types/ticket.types";
+import {ticketService} from "@/services/ticket.service";
+
 import EditEventForm from "@/components/core/EditEventForm/EditEventForm";
 
-
-
-function Page(props) {
+function Page(props: any) {
 
 
     const [fetchedEvent, setFetchedEvent] = useState<IEventGetRes>();
+    const [tickets, setTickets] = useState<ITicket[]>();
+    const [page, setPage] = useState<number>();
 
     useEffect(() => {
         eventService.getEvent(Number(props.params.eventId)).then(res => {
             setFetchedEvent(res)
         })
+        ticketService.getEventTickets(Number(props.params.eventId), 0, 25).then(res => {
+            setTickets(res.data)
+            setPage(0)
+        })
     }, []);
 
 
 
-    const columns = [
-        {
-            key: "type",
-            label: "TYPE",
-        },
-        {
-            key: "description",
-            label: "DESCRIPTION",
-        },
-        {
-            key: "overallCount",
-            label: "OVERALL COUNT",
-        },
-        {
-            key: "soldCount",
-            label: "SOLD COUNT",
-        },
-    ];
+
 
     return (
             <Box className={'max-h-screen p-10'}>
@@ -70,29 +55,7 @@ function Page(props) {
 
                     {fetchedEvent && <EditEventForm fetchedEvent={fetchedEvent}/>}
                 </div>
-                <span className={'text-xl font-bold text-gray-700'}>Tickets:</span>
-                {/*{fetchedEvent?.ticketsStatistic && <Table*/}
-                {/*    aria-label="Example empty table"*/}
-                {/*    className={'mt-4'}*/}
-                {/*>*/}
-                {/*    <TableHeader columns={columns}>*/}
-                {/*        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}*/}
-                {/*    </TableHeader>*/}
-                {/*    <TableBody items={fetchedEvent.ticketsStatistic}>*/}
-                {/*        {(item) => (*/}
-                {/*            <TableRow*/}
-                {/*                // key={item.id}*/}
-                {/*                className={''}*/}
-                {/*            >*/}
-                {/*                {(columnKey) => <TableCell*/}
-                {/*                    className={'text-black'}*/}
-                {/*                >*/}
-                {/*                    {getKeyValue(item, columnKey)}*/}
-                {/*                </TableCell>}*/}
-                {/*            </TableRow>*/}
-                {/*        )}*/}
-                {/*    </TableBody>*/}
-                {/*</Table>}*/}
+
             </Box>
 
     );

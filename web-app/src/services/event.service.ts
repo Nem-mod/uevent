@@ -18,5 +18,7 @@ export const eventService = {
         } catch (e) {
             throw new Error('Error fetching event')
         }
-    }
+    },
+
+
 }
