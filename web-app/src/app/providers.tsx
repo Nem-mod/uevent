@@ -31,7 +31,7 @@ export function Providers({ children }: ProvidersProps) {
 
     return (
         <NextUIProvider navigate={router.push}>
-            <UserProvider user={user}>
+            <UserProvider user={user} hook={setUser}>
                 <ThemesAndFormatsProvider data={themesAndFormats}>
                     {children}
                 </ThemesAndFormatsProvider>

@@ -1,15 +1,16 @@
 'use client';
 
 import React from 'react';
-import {z, ZodType} from 'zod';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Button} from '@nextui-org/button';
+import { z, ZodType } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
-import {Link} from "@nextui-org/react";
-import {IUserAuthForm} from "@/types/user.types";
-import {authService} from "@/services/auth.service";
-import {useRouter} from "next/navigation";
+import { Link } from '@nextui-org/react';
+import { IUserAuthForm } from '@/types/user.types';
+import { authService } from '@/services/auth.service';
+import { useRouter } from 'next/navigation';
+import { useUserProvider } from '@/providers/UserProvider';
 
 
 const schema: ZodType<IUserAuthForm> = z.object({
@@ -22,20 +23,25 @@ function LoginForm() {
         register,
         handleSubmit,
         setError,
-        formState: {errors},
-    } = useForm<IUserAuthForm>({resolver: zodResolver(schema)});
+        formState: { errors },
+    } = useForm<IUserAuthForm>({ resolver: zodResolver(schema) });
 
     const router = useRouter();
+
+    const [user, setUser] = useUserProvider();
     const action: () => void = handleSubmit(async (data: IUserAuthForm) => {
         try {
-            await authService.login(data);
-            router.push(`/`);
+            const res = await authService.login(data);
             router.refresh();
+            if (res && setUser) {
+                setUser(res);
+            }
+            router.push(`/`);
         } catch (error) {
             if (error instanceof Error)
-                setError('root', {type: 'custom', message: error.message});
+                setError('root', { type: 'custom', message: error.message });
         }
-    })
+    });
 
     return (
         <form

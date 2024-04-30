@@ -38,7 +38,7 @@ const icons = {
 
 export function CustomNavBar() {
     const [_, setIsMenuOpen] = useState(false);
-    const user: IUserRegisterAndAuthRes | null = useUserProvider();
+    const [user] = useUserProvider();
     const [organizations, setOrganizations] = useState<IOrganization[]>([]);
 
     useEffect(() => {
