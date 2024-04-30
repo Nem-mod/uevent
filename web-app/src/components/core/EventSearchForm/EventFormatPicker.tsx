@@ -1,13 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import {
-    Button,
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-    Select,
-    SelectItem,
-} from '@nextui-org/react';
+import { Button, Popover, PopoverContent, PopoverTrigger, Select, SelectItem } from '@nextui-org/react';
 import { ChevronDownIcon } from '@nextui-org/shared-icons';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useThemesAndFormatsProvider } from '@/providers/ThemesAndFormatsProvider';
@@ -38,8 +31,7 @@ function EventFormatPicker({ title }: Props) {
         if (!selected) {
             params.delete('format');
         } else {
-            let formatSelected = encodeURIComponent(JSON.stringify(selected.split(',')));
-            params.set('format', formatSelected);
+            params.set('format', selected);
         }
 
         replace(`${pathname}?${params.toString()}`);
