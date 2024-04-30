@@ -4,7 +4,7 @@ export interface EventTypes {
     id: string | number;
     title: string;
     description: string;
-    startTime: Date;
+    startTime: string;
     duration: number;
     location: string;
     poster: string;
@@ -26,6 +26,12 @@ export interface IEventGetRes extends EventTypes {
     };
     themes: IEventTheme[];
     format: IEventFormat;
+    ticketsStatistic: {
+        cost: number;
+        type: string;
+        overallCount: string;
+        soldCount: string
+    }[]
 }
 
 export interface IEventsGetWithPagination {
