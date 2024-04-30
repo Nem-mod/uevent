@@ -5,13 +5,12 @@ import { IEventsGetWithPagination } from '@/types/event.types';
 import { PAGINATION_OFFSET } from '@/constants/pagination';
 import { countPaginationPages } from '@/utils/count-pagination-pages';
 
-interface SearchQuery {
-    data: string[] | string;
-    format: string[] | string;
+type SearchQuery  = {
+    date: string[] | string;
+    format: number[] | number;
     page: number;
     totalPages: number;
     offset: number;
-
 }
 
 interface Props {
@@ -19,13 +18,17 @@ interface Props {
     searchParams?: SearchQuery;
 }
 
-async function fetchEvents(query?: SearchQuery, body?: any): Promise<IEventsGetWithPagination> {
+async function fetchEvents(query?: SearchQuery): Promise<IEventsGetWithPagination> {
     const offset = query?.offset || PAGINATION_OFFSET;
     const page = (query?.page && query.page - 1) || 0;
+    const { format, date } = query || {};
     const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_HOST}/event/?`
         + `offset=${offset}`
-        + `&page=${page}`,
+        + `&page=${page}`
+        + (format ? `&format=${format}`: '')
+        + (date ? `&date=${date}`: '')
+        ,
         {
             cache: 'no-cache',
         },

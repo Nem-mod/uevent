@@ -20,9 +20,9 @@ function EventDatePicker({ title }: Props) {
     const handleSubmit = () => {
         if (!selected) return;
         const params = new URLSearchParams(searchParams);
-        let datesSelected = encodeURIComponent(
-            JSON.stringify(selected.map((e) => e.toISOString())),
-        );
+        let datesSelected = selected.map(e => {
+            return e.toISOString();
+        }).join(',');
         params.set('date', datesSelected);
 
         replace(`${pathname}?${params.toString()}`);
