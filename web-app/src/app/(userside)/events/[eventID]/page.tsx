@@ -76,8 +76,7 @@ async function Page({ params }: Props) {
                     </div>
                     <div className={'flex flex-col gap-2'}>
                         <span className={'text-xl font-bold text-gray-700'}>Description:</span>
-                        <span className={'text-lg text-black text-pretty'}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A assumenda at dicta dignissimos ducimus eveniet excepturi harum id illum impedit minima quam reprehenderit saepe sapiente, ullam velit voluptatum. Asperiores assumenda atque dolorem eos error facere iure labore magnam, magni odio officia officiis quas quos sint, sunt veritatis voluptate voluptates voluptatibus?</span>
-                    </div>
+                        <span className={'text-lg text-black text-pretty'}>{fetchedEvent.description}</span></div>
                 </div>
                 <div className={'basis-2/5'}>
                     <BuyTicketForm ticketTypes={fetchedEvent.ticketsStatistic} />
