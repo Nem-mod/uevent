@@ -1,58 +1,60 @@
-import React, {useEffect, useState} from 'react';
-import {Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
-import {Button} from "@nextui-org/button";
-import {Input, Textarea} from "@nextui-org/input";
-import {DatePicker} from "@nextui-org/date-picker";
-import {CalendarDateTime, parseDateTime} from "@internationalized/date";
-import {IEventGetRes} from "@/types/event.types";
-import {useRouter} from "next/navigation";
+import React, { useState } from 'react';
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
+import { Input, Textarea } from '@nextui-org/input';
+import { DatePicker } from '@nextui-org/date-picker';
+import { CalendarDateTime, getLocalTimeZone, parseDateTime } from '@internationalized/date';
+import { IEventGetRes, IUpdateEvent } from '@/types/event.types';
+import { useRouter } from 'next/navigation';
+import { useOrganizationProvider } from '@/providers/OrganizationProvider';
+import { eventService } from '@/services/event.service';
 
 
 interface Props {
-    fetchedEvent: IEventGetRes
+    fetchedEvent: IEventGetRes;
 }
 
-function EditEventForm({fetchedEvent}: Props) {
+function EditEventForm({ fetchedEvent }: Props) {
 
     const router = useRouter();
-
-    const [title, setTitle] = useState(fetchedEvent.title)
+    const organizationId = useOrganizationProvider();
+    const [title, setTitle] = useState(fetchedEvent.title);
     const [date, setDate] = useState<CalendarDateTime>(parseDateTime(fetchedEvent.startTime.slice(0, 16)));
     const [duration, setDuration] = useState(`${fetchedEvent.duration}`);
     const [description, setDescription] = useState(fetchedEvent.description);
 
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const [isEdit, setIsEdit] = useState(false);
-
 
 
     // TODO: ADD LOGIC
     const handleDelete = () => {
 
-    }
+    };
 
     // TODO: ADD LOGIC
-    const handleSubmitEdit = () => {
-        const reqBody = {
+    const handleSubmitEdit = async () => {
+        const event: IUpdateEvent = {
+            id: Number(fetchedEvent.id),
             title: title,
-            startDate: date,
+            startTime: date.toDate(getLocalTimeZone()).toISOString(),
             description: description,
             duration: Number(duration),
-            // price: Number(tickets)
-        }
-        console.log(reqBody);
-    }
+        };
+        const res = await eventService.updateEvent(event, organizationId);
+        setIsEdit(false);
+    };
 
     const handleEdit = () => {
         if (isEdit) {
             setTitle(fetchedEvent.title);
-            setDate(parseDateTime(fetchedEvent.startTime.slice(0, 16)))
+            setDate(parseDateTime(fetchedEvent.startTime.slice(0, 16)));
             setDuration(`${fetchedEvent.duration}`);
             setDescription(fetchedEvent.description);
         }
-        setIsEdit(!isEdit)
-    }
+        setIsEdit(!isEdit);
+    };
 
     return (
         <>
@@ -60,7 +62,7 @@ function EditEventForm({fetchedEvent}: Props) {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+                            <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
                             <ModalBody>
                                 <span className={'text-black font-semibold text-2xl'}>
                                     Are you sure you want to delete this event?
@@ -70,11 +72,11 @@ function EditEventForm({fetchedEvent}: Props) {
                                 </span>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" variant="light" onPress={onClose}>
+                                <Button color='primary' variant='light' onPress={onClose}>
                                     Cancel
                                 </Button>
                                 <form onSubmit={handleDelete}>
-                                    <Button type={'submit'} color="danger" onPress={onClose}>
+                                    <Button type={'submit'} color='danger' onPress={onClose}>
                                         Delete
                                     </Button>
                                 </form>
@@ -96,8 +98,8 @@ function EditEventForm({fetchedEvent}: Props) {
                 <DatePicker
                     value={date} onChange={setDate}
                     isReadOnly={!isEdit}
-                    label="Event Date"
-                    variant="bordered"
+                    label='Event Date'
+                    variant='bordered'
                     hideTimeZone
                     showMonthAndYearPickers
                 />
@@ -128,7 +130,7 @@ function EditEventForm({fetchedEvent}: Props) {
                                             {theme.name}
                                         </span>
                                     </div>
-                                )
+                                );
                             })}
                         </div>
                     </div>
@@ -160,11 +162,11 @@ function EditEventForm({fetchedEvent}: Props) {
                                 'h-12 border border-primary bg-accent text-white hover:bg-accent ' +
                                 'text-lg font-semibold hover:border-accent hover:text-white w-1/3'
                             }>
-                            {isEdit ? "Cancel" : "Edit event"}
+                            {isEdit ? 'Cancel' : 'Edit event'}
                         </Button>
                         <Button
                             onClick={handleSubmitEdit}
-                            className={!isEdit ? "hidden" :
+                            className={!isEdit ? 'hidden' :
                                 'h-12 border border-primary bg-accent text-white hover:bg-accent ' +
                                 'text-lg font-semibold hover:border-accent hover:text-white w-1/3'
                             }

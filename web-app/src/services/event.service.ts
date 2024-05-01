@@ -1,5 +1,5 @@
 import { axiosWithAuth } from '@/api/interseptors';
-import {ICreateEventAndTickets, IEventGetRes} from '@/types/event.types';
+import { ICreateEventAndTickets, IEventGetRes, IUpdateEvent } from '@/types/event.types';
 
 export const eventService = {
     async createEvent(data: ICreateEventAndTickets, orgId: number | string) {
@@ -20,6 +20,15 @@ export const eventService = {
             throw new Error('Error fetching event')
         }
     },
+
+    async updateEvent(data: IUpdateEvent, orgId: number) {
+        try {
+            const response = await axiosWithAuth.patch(`/event/${orgId}`, data);
+            return response.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
 }

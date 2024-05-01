@@ -53,4 +53,16 @@ export interface ICreateEventAndTickets {
     tickets?: ICreateEventTicket[];
 }
 
+export interface IUpdateEvent {
+    id: number;
+    title?: string;
+    description?: string;
+    format?: IEventFormat // | number;
+    themes?: IEventTheme[] // | number[];
+    startTime?: string;
+    duration?: number; // s? ms? m? h?
+    poster?: string; // url to event poster
+    location?: string;
+    tickets?: ICreateEventTicket[];
+}
 
