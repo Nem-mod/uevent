@@ -23,3 +23,8 @@ export interface IUserAuthForm {
     email: string;
     password: string;
 }
+
+export interface IUserUpdate {
+    email: string,
+    username: string
+}
