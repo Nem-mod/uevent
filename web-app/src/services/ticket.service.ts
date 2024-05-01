@@ -6,7 +6,7 @@ export const ticketService = {
     async getEventTickets(id: number, page: number, offset: number): Promise<ITicketsPaginated> {
         try {
             const response = await axiosWithAuth.get(
-                `/tickets/event/${id}?offset=${offset}&?page=${page}`
+                `/tickets/event/${id}?offset=${offset}&page=${page}`
             );
             return response.data;
         } catch (e) {
