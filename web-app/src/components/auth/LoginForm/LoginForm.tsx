@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { z, ZodType } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,7 +11,7 @@ import { IUserAuthForm } from '@/types/user.types';
 import { authService } from '@/services/auth.service';
 import { useRouter } from 'next/navigation';
 import { useUserProvider } from '@/providers/UserProvider';
-
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const schema: ZodType<IUserAuthForm> = z.object({
     email: z.string().email(),
@@ -29,7 +29,14 @@ function LoginForm() {
     const router = useRouter();
 
     const [user, setUser] = useUserProvider();
+    const [errCount, setErrorCount] = useState(0);
+    const [captcha, setCaptcha] = useState<string | null>(null);
     const action: () => void = handleSubmit(async (data: IUserAuthForm) => {
+        if (errCount >= 3 && !captcha) {
+            setError('root', { type: 'custom', message: 'Pass the captcha' });
+            return;
+        }
+
         try {
             const res = await authService.login(data);
             router.refresh();
@@ -38,6 +45,17 @@ function LoginForm() {
             }
             router.push(`/`);
         } catch (error) {
+            setErrorCount(prevState => ++prevState)
+            // @ts-ignore
+            if(window?.grecaptcha) {
+                try {
+                // @ts-ignore
+                    window?.grecaptcha?.reset();
+                    setCaptcha(null);
+                } catch (e) {
+
+                }
+            }
             if (error instanceof Error)
                 setError('root', { type: 'custom', message: error.message });
         }
@@ -66,6 +84,11 @@ function LoginForm() {
                 label={'Password'}
                 errorMessage={errors.password?.message}
             />
+            {errCount >= 3 && (
+                <div className={'flex w-full'}>
+                    <ReCAPTCHA sitekey={'6Ld0I80pAAAAACw2bwrsU_OXHph6h6bKRf0d4fMJ'} onChange={(token) => setCaptcha(token)}/>
+                </div>
+            )}
             <Link
                 href={'/recovery'}
                 underline={'hover'}
