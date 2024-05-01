@@ -20,18 +20,20 @@ export interface ICreateEventTicket {
     amount: number
 }
 
+export interface TicketStatistic {
+    cost: number;
+    type: string;
+    overallCount: string;
+    soldCount: string
+}
+
 export interface IEventGetRes extends EventTypes {
     organization: {
         id: string;
     };
     themes: IEventTheme[];
     format: IEventFormat;
-    ticketsStatistic: {
-        cost: number;
-        type: string;
-        overallCount: string;
-        soldCount: string
-    }[]
+    ticketsStatistic: TicketStatistic[]
 }
 
 export interface IEventsGetWithPagination {
