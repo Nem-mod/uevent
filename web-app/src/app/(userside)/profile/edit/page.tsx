@@ -1,41 +1,48 @@
-'use client'
+'use client';
 
 import React from 'react';
-import Box from "@/components/utils/Box/Box";
-import {Button, Link} from "@nextui-org/react";
-import InputFormText from "@/components/auth/InputFormText/InputFormText";
+import Box from '@/components/utils/Box/Box';
+import { Button, Link } from '@nextui-org/react';
+import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import { z, ZodType } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useUserProvider } from '@/providers/UserProvider';
+import { useRouter } from 'next/navigation';
+import { IUserUpdate } from '@/types/user.types';
+import { userService } from '@/services/user.service';
 
-type FormValues = {
-    email: string,
-    username: string
-}
 
-const schema: ZodType<FormValues> = z.object({
+const schema: ZodType<IUserUpdate> = z.object({
     username: z.string(),
     email: z.string().email(),
 });
 
 function Page() {
+    const [user, setUser] = useUserProvider();
+    const router = useRouter();
 
-    const user = {
-        username: 'Getter-of-bitches',
-        email: 'john.doe@gmail.com'
+    if (!user) {
+        router.push('/');
     }
 
     const {
         register,
         handleSubmit,
-        formState: {
-
-        }
-    } = useForm<FormValues>({resolver: zodResolver(schema)})
+        formState: {},
+    } = useForm<IUserUpdate>({ resolver: zodResolver(schema) });
 
     // TODO: ADD LOGIC
-    const submitEdit = (data: FormValues) => {
-        console.log(data);
+    const submitEdit = async (data: IUserUpdate) => {
+        try {
+            const updatedUser = await userService.updateUser(data);
+            router.push('/profile');
+            if (setUser) {
+                setUser(updatedUser);
+            }
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
@@ -50,14 +57,14 @@ function Page() {
                         register={register}
                         name={'username'}
                         label={'Username'}
-                        defaultValue={user.username}
+                        defaultValue={user?.username}
                     />
                     <InputFormText
                         type={'text'}
                         register={register}
                         name={'email'}
                         label={'Email'}
-                        defaultValue={user.email}
+                        defaultValue={user?.email}
                     />
                     <div className={'flex flex-row gap-2 mt-8'}>
                         <Button
