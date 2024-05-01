@@ -1,5 +1,6 @@
 import { axiosWithAuth } from '@/api/interseptors';
 import { IOrganization, IOrganizationRegisterForm } from '@/types/organization.types';
+import {IEventGetRes, IEventsGetWithPagination} from "@/types/event.types";
 
 export const organizationService = {
     async registerOrganization(data: IOrganizationRegisterForm) {
@@ -19,4 +20,13 @@ export const organizationService = {
             throw new Error('Get all org error');
         }
     },
+
+    async getAllOrgEvents(id: number): Promise<IEventsGetWithPagination> {
+        try {
+            const response = await axiosWithAuth.get(`/event/organization/${id}`);
+            return response.data;
+        } catch (e) {
+            throw new Error('Get some bitches dude')
+        }
+    }
 };

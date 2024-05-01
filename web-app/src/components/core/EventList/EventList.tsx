@@ -1,9 +1,9 @@
 import React from 'react';
 import EventCard from "@/components/core/EventCard/EventCard";
-import {EventTypes} from "@/types/event.types";
+import {EventTypes, IEventGetRes} from "@/types/event.types";
 
 interface Props {
-    events: EventTypes[]
+    events: IEventGetRes[]
 }
 function EventList({events}: Props) {
     return (
@@ -12,9 +12,9 @@ function EventList({events}: Props) {
                 <EventCard
                     title={e.title}
                     start={new Date(e.startTime)}
-                    price={100}
-                    tag={'Bitch nigga'}
-                    address={e.location}
+                    format={e.format}
+                    themes={e.themes}
+                    location={e.location}
                     img={e.poster}
                     href={`/events/${e.id}`}
                 />

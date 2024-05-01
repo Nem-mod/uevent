@@ -1,17 +1,18 @@
 import React from 'react';
 import {Link} from "@nextui-org/react";
+import {IEventFormat, IEventTheme} from "@/types/theme-format.types";
 
 interface CardTypes {
     title: string;
     start: Date;
-    price: string | number;
-    tag: string;
-    address: string;
+    format: IEventFormat;
+    themes: IEventTheme[];
+    location: string;
     img?: string;
     href?: string
 }
 
-function EventCard({title, start, price, tag, address, img, href}: CardTypes) {
+function EventCard({title, start, format, location, themes, img, href}: CardTypes) {
     return (
         <Link href={href} className={''}>
             <div className={'border-gray/70 max-w-md flex flex-row rounded-xl border-2 shadow-xl'}>
@@ -23,14 +24,18 @@ function EventCard({title, start, price, tag, address, img, href}: CardTypes) {
                         <span className={'text-l font-bold text-black text-xl'}>{title}</span>
                     </div>
                     <div className={'flex flex-col gap-2'}>
-                    <span className={'text-m font-semibold text-black'}>
-                        {start && start.toDateString()}
-                    </span>
-                        <span className={'text-m text-gray-500'}>{tag}</span>
+                        <span className={'text-m font-semibold text-black'}>
+                            {start && start.toDateString()}
+                        </span>
+                        <span className={'text-m text-gray-500'}>{format.name}</span>
+                        <span
+                            className={'text-m text-gray-500'}
+                        >
+                            {themes.map(theme => theme.name).join(', ')}
+                        </span>
                     </div>
                     <div className={'flex flex-col gap-2'}>
-                        <span className={'text-m text-gray-500'}>{address}</span>
-                        <span className={'text-m text-gray-500'}>{price}</span>
+                        <span className={'text-m text-gray-500'}>{location}</span>
                     </div>
                 </div>
             </div>
