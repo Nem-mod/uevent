@@ -7,6 +7,7 @@ import {Button} from '@nextui-org/button';
 import {IUserRegisterForm} from "@/types/user.types";
 import {authService} from "@/services/auth.service";
 import {useRouter} from "next/navigation";
+import {Checkbox, Link} from "@nextui-org/react";
 
 
 const schema: ZodType<IUserRegisterForm> = z
@@ -52,7 +53,7 @@ function RegistrationForm() {
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
         >
-            <h1 className={'text-3xl font-bold text-black'}>Registration lmao</h1>
+            <h1 className={'text-3xl font-bold text-black'}> Sign up </h1>
 
             <InputFormText
                 register={register}
@@ -86,6 +87,10 @@ function RegistrationForm() {
             {errors.root?.message && (
                 <h1 className={'text-red-600'}>{errors.root.message}</h1>
             )}
+            <div className={'flex gap-4 mr-auto'}>
+                <Checkbox required={true}/>
+                <Link href={'https://www.rule34.xxx'}>I accept company policy</Link>
+            </div>
             <Button
                 type={'submit'}
                 className={

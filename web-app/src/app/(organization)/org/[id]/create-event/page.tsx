@@ -13,7 +13,7 @@ import {
     Select,
     SelectItem,
     useDisclosure,
-    Selection
+    Selection, Link
 } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { uploadPoster } from '@/actions/gcs/upload-poster';
@@ -23,6 +23,7 @@ import TicketForm from '@/components/organization/TicketForm/TicketForm';
 import { eventService } from '@/services/event.service';
 import { useThemesAndFormatsProvider } from '@/providers/ThemesAndFormatsProvider';
 import { useRouter } from 'next/navigation';
+import Box from "@/components/utils/Box/Box";
 
 function Page() {
     const router = useRouter();
@@ -68,10 +69,12 @@ function Page() {
         const data: ICreateEventAndTickets = {
             title: title,
             description: description,
-            startTime: startTime.toDate(),
+            startTime: startTime.toString(),
             duration: duration,
-            format: format,
-            themes: themesArray,
+            format: {id: format, name: ''},
+            themes: themesArray.map(e => {
+                return {id: e, name: ''}
+            }),
             poster: imgURL,
             tickets: tickets
         }
@@ -205,7 +208,65 @@ function Page() {
                         <>
                             <ModalHeader className='flex flex-col gap-1'>Modal Title</ModalHeader>
                             <ModalBody>
-                                <h1 className={'text-black text-8xl'}>Here will be a very cool poster</h1>
+                                {/*<Box className={'mt-20 flex gap-20 p-10'}>*/}
+                                {/*    <div className={'w-1/3 p-0 flex'}>*/}
+                                {/*        <img*/}
+                                {/*            className={'rounded-lg object-cover'}*/}
+                                {/*            src={imgURL}*/}
+                                {/*            alt={'Poster'}*/}
+                                {/*        />*/}
+                                {/*    </div>*/}
+                                {/*    <div className={'flex basis-2/5 md:flex-col lg:flex-row gap-5 grow mt-5'}>*/}
+
+                                {/*        <div className={'flex basis-8/12 grow-0 flex-col gap-8'}>*/}
+                                {/*            <div className={'flex flex-col gap-2'}>*/}
+                                {/*                <span className={'text-3xl font-extrabold text-black'}>*/}
+                                {/*                    {title}*/}
+                                {/*                </span>*/}
+                                {/*                <span className={'text-2xl font-bold text-gray-700'}>*/}
+                                {/*                    {new Date(startTime.toString()).toDateString()}*/}
+                                {/*                </span>*/}
+                                {/*                <span className={'text-2xl font-bold text-gray-700'}>*/}
+                                {/*                    {`${location}`}*/}
+                                {/*                </span>*/}
+                                {/*            </div>*/}
+                                {/*            <div className={'flex flex-row'}>*/}
+                                {/*                <div className={'flex flex-col gap-3 py-2 pr-10'}>*/}
+                                {/*                    <span className={'text-lg text-gray-700'}>Duration:</span>*/}
+                                {/*                    <span className={'text-lg text-gray-700'}>Format:</span>*/}
+                                {/*                    <span className={'text-lg text-gray-700'}>Themes:</span>*/}
+                                {/*                </div>*/}
+                                {/*                <div className={'flex flex-col gap-2 py-2'}>*/}
+                                {/*                <span className={'text-bold text-lg text-black'}>*/}
+                                {/*                    {duration} min*/}
+                                {/*                </span>*/}
+                                {/*                    <div className={'p-1 px-2 rounded-xl bg-secondary/20 w-fit'}>*/}
+                                {/*                        <Link className={'text-bold text-lg text-black'}>*/}
+                                {/*                            {}*/}
+                                {/*                        </Link>*/}
+                                {/*                    </div>*/}
+                                {/*                    <div className={'flex gap-2'}>*/}
+                                {/*                        {fetchedEvent.themes.map(theme => {*/}
+                                {/*                            return (*/}
+                                {/*                                <div className={'p-1 px-2 rounded-xl bg-secondary/20'}>*/}
+                                {/*                                    <Link className={'text-bold text-lg text-black'}>*/}
+                                {/*                                        {theme.name}*/}
+                                {/*                                    </Link>*/}
+                                {/*                                </div>*/}
+                                {/*                            );*/}
+                                {/*                        })}*/}
+                                {/*                    </div>*/}
+                                {/*                </div>*/}
+                                {/*            </div>*/}
+                                {/*            <div className={'flex flex-col gap-2'}>*/}
+                                {/*                <span className={'text-xl font-bold text-gray-700'}>Description:</span>*/}
+                                {/*                <span className={'text-lg text-black text-pretty'}>{fetchedEvent.description}</span></div>*/}
+                                {/*        </div>*/}
+                                {/*        <div className={'basis-2/5'}>*/}
+                                {/*            <BuyTicketForm ticketTypes={fetchedEvent.ticketsStatistic} />*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*</Box>*/}
                             </ModalBody>
                             <ModalFooter>
                                 <Button color='primary' variant='light' onPress={onClose}>

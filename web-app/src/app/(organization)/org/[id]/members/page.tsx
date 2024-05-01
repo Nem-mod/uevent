@@ -120,7 +120,10 @@ function Page() {
                 aria-label="Example table with dynamic content"
                 selectionMode={'multiple'}
                 selectedKeys={selectedKeys}
+                // @ts-ignore
                 onSelectionChange={setSelectedKeys}
+                className={'[&>*]:bg-accent/10'}
+                isStriped
             >
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -129,7 +132,7 @@ function Page() {
                     {(item) => (
                         <TableRow
                             key={item.key}
-                            className={'bg-accent text-white rounded-md'}
+                            className={'text-white rounded-md'}
                         >
                             {(columnKey) => <TableCell
                                 className={'text-black'}

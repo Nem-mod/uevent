@@ -88,14 +88,14 @@ function Page() {
                     {user.email}
                 </span>
                     <div className={'flex flex-col ml-auto gap-2'}>
-                        <Button
-                            className={
-                                'mt-auto ml-auto h-12 border border-primary bg-accent text-white hover:bg-accent ' +
-                                'w-fit text-lg font-semibold hover:border-accent hover:text-white'
-                            }
-                        >
-                            Reset password
-                        </Button>
+                        {/*<Button*/}
+                        {/*    className={*/}
+                        {/*        'mt-auto ml-auto h-12 border border-primary bg-accent text-white hover:bg-accent ' +*/}
+                        {/*        'w-fit text-lg font-semibold hover:border-accent hover:text-white'*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*    Reset password*/}
+                        {/*</Button>*/}
                         <Button
                             href={'/profile/edit'}
                             as={Link}
@@ -106,16 +106,16 @@ function Page() {
                         >
                             Edit profile
                         </Button>
-                        <Button
-                            onPress={onOpen}
-                            color={'danger'}
-                            className={
-                                'mt-auto ml-auto h-12 text-white ' +
-                                'w-fit text-lg font-semibold hover:border-accent hover:text-white'
-                            }
-                        >
-                            Delete Account
-                        </Button>
+                        {/*<Button*/}
+                        {/*    onPress={onOpen}*/}
+                        {/*    color={'danger'}*/}
+                        {/*    className={*/}
+                        {/*        'mt-auto ml-auto h-12 text-white ' +*/}
+                        {/*        'w-fit text-lg font-semibold hover:border-accent hover:text-white'*/}
+                        {/*    }*/}
+                        {/*>*/}
+                        {/*    Delete Account*/}
+                        {/*</Button>*/}
                         <Button
                             onClick={handleLogOut}
                             color={'danger'}

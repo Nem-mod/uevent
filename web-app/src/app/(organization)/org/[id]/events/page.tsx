@@ -55,22 +55,24 @@ function Page() {
             </div>
             {events && <Table
                 aria-label="Example empty table"
-                className={'mt-4'}
-                bottomContent={
-                    pages > 0 ? (
-                        <div className="flex w-full justify-center">
-                            <Pagination
-                                isCompact
-                                showControls
-                                showShadow
-                                color={'default'}
-                                page={page}
-                                total={pages}
-                                onChange={(page) => setPage(page)}
-                            />
-                        </div>
-                    ) : null
-                }
+                className={'mt-4 [&>*]:bg-accent/20 [&>*]:rounded-3xl [&>*]:[&>*]:bg-accent/20'}
+                isStriped={true}
+                // selectionMode="single"
+                // bottomContent={
+                //     pages > 0 ? (
+                //         <div className="flex w-fit m-auto justify-center bg-accent/20 rounded-3xl">
+                //             <Pagination
+                //                 isCompact
+                //                 showControls
+                //                 showShadow
+                //                 color={'default'}
+                //                 page={page}
+                //                 total={pages}
+                //                 onChange={(page) => setPage(page)}
+                //             />
+                //         </div>
+                //     ) : null
+                // }
             >
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
@@ -80,7 +82,7 @@ function Page() {
                         <TableRow
                             href={`/org/${orgID}/events/${item.id}`}
                             key={item.id}
-                            className={'bg-accent text-white rounded-md'}
+                            className={'hover:bg-secondary/20 ease-in-out rounded-xl border-white cursor-pointer'}
                         >
                             {(columnKey) => <TableCell
                                 className={'text-black'}

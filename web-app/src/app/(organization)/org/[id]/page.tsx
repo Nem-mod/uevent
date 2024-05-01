@@ -1,7 +1,13 @@
+'use client'
+
 import React from 'react';
+import {useRouter} from "next/navigation";
+import {useOrganizationProvider} from "@/providers/OrganizationProvider";
 
 function Page() {
-    return <div className={'text-black'}>fff</div>;
+    const router = useRouter();
+    router.replace(`/org/${useOrganizationProvider()}/events`)
+    return <div className={'text-black'}></div>;
 }
 
 export default Page;

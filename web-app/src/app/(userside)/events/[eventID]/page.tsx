@@ -16,7 +16,7 @@ async function getEvent(id: number | string) {
         redirect('/');
     }
     const event: IEventGetRes = await response.json();
-    event.startTime = new Date(event.startTime);
+    // event.startTime = new Date(event.startTime);
     return event;
 }
 
@@ -40,7 +40,7 @@ async function Page({ params }: Props) {
                         {fetchedEvent.title}
                     </span>
                         <span className={'text-2xl font-bold text-gray-700'}>
-                        {fetchedEvent.startTime.toDateString()}
+                        {new Date(fetchedEvent.startTime).toDateString()}
                     </span>
                         <span className={'text-2xl font-bold text-gray-700'}>
                         {fetchedEvent.location}

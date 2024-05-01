@@ -68,7 +68,7 @@ function LoginForm() {
                 'w-fill flex flex-col items-center justify-center gap-4 bg-transparent p-4 [&>*]:shadow-sm'
             }
         >
-            <h1 className={'text-3xl font-bold text-black'}> Sign in bitch</h1>
+            <h1 className={'text-3xl font-bold text-black'}> Sign in </h1>
 
             <InputFormText
                 register={register}
