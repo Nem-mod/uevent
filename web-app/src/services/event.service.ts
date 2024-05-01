@@ -7,7 +7,7 @@ export const eventService = {
             const response = await axiosWithAuth.post(`/event/${orgId}`, data);
             return response.data;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     },
 }

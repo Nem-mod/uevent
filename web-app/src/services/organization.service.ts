@@ -16,7 +16,7 @@ export const organizationService = {
             const response = await axiosWithAuth.get('/org');
             return response.data;
         } catch (e) {
-            throw new Error('Get all org error');
+            // throw new Error('Get all org error');
         }
     },
 };
