@@ -4,6 +4,8 @@ import { Link } from '@nextui-org/react';
 import EventCard from '@/components/core/EventCard/EventCard';
 import { IEventsGetWithPagination } from '@/types/event.types';
 import { PAGINATION_OFFSET } from '@/constants/pagination';
+import {IEventFormat} from "@/types/theme-format.types";
+import FormatEventsList from "@/components/core/FormatEventsList/FormatEventsList";
 
 async function fetchEvents(): Promise<IEventsGetWithPagination> {
     try {
@@ -22,8 +24,24 @@ async function fetchEvents(): Promise<IEventsGetWithPagination> {
     return { count: 0, data: [] };
 }
 
+async function fetchFormats(): Promise<IEventFormat[]> {
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_HOST}/event/formats`,
+            {
+                cache: 'no-cache',
+            }
+        );
+        return await response.json();
+    } catch (error) {
+        console.log(error)
+    }
+    return {};
+}
+
 export default async function Home() {
     const { data: eventList } = await fetchEvents();
+    const formats = await fetchFormats();
     return (
         <div className={'h-full'}>
             <div className={'h-unit-9xl w-full'}>
@@ -45,6 +63,10 @@ export default async function Home() {
                             href={`/events/${event.id}`}
                         />
                     ))}
+                </div>
+
+                <div className={'mt-5 flex flex-col gap-20 justify-center'}>
+                    {formats.map(format => (<FormatEventsList name={format.name} formatId={format.id}/>))}
                 </div>
                 <div className={'mt-12 grid w-full place-items-center'}>
                     <Button

@@ -12,7 +12,7 @@ export const eventService = {
         }
     },
 
-    async getEvent(id: number): Promise<IEventGetRes> {
+    async getEvent(id: number | string): Promise<IEventGetRes> {
         try {
             const response = await axiosWithAuth.get(`/event/${id}`);
             return response.data;
