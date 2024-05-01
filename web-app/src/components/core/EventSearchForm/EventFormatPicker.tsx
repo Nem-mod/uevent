@@ -20,7 +20,6 @@ function EventFormatPicker({ title }: Props) {
     const [selected, setSelected] = useState<string>(
         decodeURIComponent(searchParams.get('format') || ''),
     );
-    console.log(selected);
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelected(e.target.value);
     };
