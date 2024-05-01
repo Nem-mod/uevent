@@ -6,6 +6,8 @@ import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
 
 import { Pagination, Autoplay } from 'swiper/modules';
+import {IEventGetRes} from "@/types/event.types";
+import {Link} from "@nextui-org/react";
 
 const contentArray = [
     {
@@ -28,7 +30,11 @@ const contentArray = [
     },
 ];
 
-function Slider() {
+interface Props {
+    events: IEventGetRes[]
+}
+
+function Slider({events}: Props) {
     return (
         <div className={'h-full w-full'}>
             <Swiper
@@ -46,31 +52,38 @@ function Slider() {
                 modules={[Pagination, Autoplay]}
                 className={'h-full'}
             >
-                {contentArray &&
-                    contentArray.map((e) => {
+                {events &&
+                    events.map((e) => {
                         return (
-                            <SwiperSlide
-                                key={e.poster}
-                                className={`h-screen bg-primary`}
+                            <Link
+                                href={`/events/${e.id}`}
                             >
-                                <div
-                                    className={'grid h-full place-items-center'}
-                                    style={{
-                                        backgroundImage: `url(${e.poster})`,
-                                        backgroundSize: 'cover',
-                                    }}
+                                <SwiperSlide
+                                    key={e.poster}
+                                    className={`h-screen bg-primary`}
                                 >
-                                    <div className={'font-mono'}>
-                                        <div className={'text-5xl'}>
-                                            {e.start_time.toDateString()}
+                                    <div
+                                        className={'grid h-full place-items-center'}
+                                        style={{
+                                            backgroundImage: `url(${e.poster})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center'
+                                            // backgroundRepeat: 'no-repeat',
+                                            // objectFit: 'fill'
+                                        }}
+                                    >
+                                        <div className={'font-mono'}>
+                                            <div className={'text-5xl'}>
+                                                {new Date(e.startTime).toDateString()}
+                                            </div>
+                                            <div className={'my-3 pl-3 text-9xl font-bold'}>
+                                                {e.title}
+                                            </div>
+                                            <div className={'float-right text-5xl'}>{e.location}</div>
                                         </div>
-                                        <div className={'my-3 pl-3 text-9xl font-bold'}>
-                                            {e.title}
-                                        </div>
-                                        <div className={'float-right text-5xl'}>{e.location}</div>
                                     </div>
-                                </div>
-                            </SwiperSlide>
+                                </SwiperSlide>
+                            </Link>
                         );
                     })}
             </Swiper>

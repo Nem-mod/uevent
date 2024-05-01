@@ -15,15 +15,15 @@ interface CardTypes {
 function EventCard({title, start, format, location, themes, img, href}: CardTypes) {
     return (
         <Link href={href} className={''}>
-            <div className={'border-gray/70 max-w-md flex flex-row rounded-xl border-2 shadow-xl'}>
+            <div className={'border-gray/70 flex flex-row rounded-xl border-2 shadow-xl h-40 w-96 '}>
                 <div className={'flex w-1/3'}>
                     <img className={'object-cover rounded-l-xl'} src={img} alt="This is an image"/>
                 </div>
-                <div className={'flex flex-col gap-4 bg-transparent px-4 py-2 pl-8 pr-20'}>
-                    <div className={'my-2 flex flex-col'}>
+                <div className={'flex flex-col bg-transparent py-2 pl-8 pr-20 w-2/3 justify-around'}>
+                    {/*<div className={'my-2 flex flex-col'}>*/}
                         <span className={'text-l font-bold text-black text-xl'}>{title}</span>
-                    </div>
-                    <div className={'flex flex-col gap-2'}>
+                    {/*</div>*/}
+                    {/*<div className={'flex flex-col gap-2'}>*/}
                         <span className={'text-m font-semibold text-black'}>
                             {start && start.toDateString()}
                         </span>
@@ -33,10 +33,8 @@ function EventCard({title, start, format, location, themes, img, href}: CardType
                         >
                             {themes.map(theme => theme.name).join(', ')}
                         </span>
-                    </div>
-                    <div className={'flex flex-col gap-2'}>
                         <span className={'text-m text-gray-500'}>{location}</span>
-                    </div>
+                    {/*</div>*/}
                 </div>
             </div>
         </Link>

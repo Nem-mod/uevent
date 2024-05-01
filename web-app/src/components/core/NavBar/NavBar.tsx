@@ -61,7 +61,7 @@ export function CustomNavBar() {
                 <NavbarMenuToggle className={'sm:hidden'} />
                 <NavbarBrand>
                     <Link href={'/'} className='font-bold text-inherit text-white'>
-                        CUMEVENT
+                        MULTIVERSE
                     </Link>
                 </NavbarBrand>
             </NavbarContent>

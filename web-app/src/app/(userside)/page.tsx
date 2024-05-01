@@ -44,8 +44,8 @@ export default async function Home() {
     const formats = await fetchFormats();
     return (
         <div className={'h-full'}>
-            <div className={'h-unit-9xl w-full'}>
-                <Slider />
+            <div className={'h-[40rem] w-full'}>
+                <Slider events={eventList}/>
             </div>
             <div className={'m-auto mt-12 max-w-screen-xl px-2'}>
                 <h2 className={'text-3xl font-bold text-black'}>TOP EVENTS</h2>
