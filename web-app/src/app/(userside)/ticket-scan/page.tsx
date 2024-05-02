@@ -1,9 +1,10 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { ticketService } from '@/services/ticket.service';
-import { Button } from '@nextui-org/button';
-import { ITicket } from '@/types/ticket.types';
+import {useSearchParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
+import {ticketService} from '@/services/ticket.service';
+import {Button} from '@nextui-org/button';
+import {ITicket, TicketStatus} from '@/types/ticket.types';
+
 
 function Page() {
     const [ticketInfo, setTicketInfo] = useState<ITicket>();
@@ -25,6 +26,7 @@ function Page() {
         const res = await ticketService.compostTicket(token);
         console.log(res);
     };
+
     return (
         <div className={'m-auto mt-12 max-w-screen-xl px-2 text-black'}>
             {ticketInfo && (
@@ -32,11 +34,13 @@ function Page() {
                     <h1 className='text-4xl font-bold'>Ticket: {ticketInfo.type}</h1>
                     <p>Description: {ticketInfo.description}</p>
                     <p>Cost: {ticketInfo.cost}$</p>
-                    <p className='text-slate-400'>
+
+                    {(ticketInfo.status !== TicketStatus.COMPOSTED) &&  (<p className='text-slate-400'>
                         <i>
                             <Button onClick={handleCompostTicket} className={'bg-accent text-white'}>Compost</Button>
                         </i>
-                    </p>
+                    </p>)}
+                    {TicketStatus[ticketInfo.status]}
                 </div>
             )}
         </div>

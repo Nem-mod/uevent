@@ -3,7 +3,15 @@ export interface ITicket {
     eventId: number;
     type: string;
     cost: number;
-    description?: string
+    description?: string;
+    status: TicketStatus
+}
+
+export enum TicketStatus {
+    AVAILABLE,
+    PROCESSING,
+    SOLD,
+    COMPOSTED,
 }
 
 export interface ITicketsPaginated {
