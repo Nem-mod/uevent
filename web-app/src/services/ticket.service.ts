@@ -34,7 +34,6 @@ export const ticketService = {
                 successUrl: `${process.env.NEXT_PUBLIC_HOST_SERVER_URL}/events/${eventId}/success-payment`,
                 cancelUrl: `${process.env.NEXT_PUBLIC_HOST_SERVER_URL}/${eventId}/cancel-payment`
             }
-            console.log(body);
             const response = await axiosWithAuth.post(`/tickets/event/${eventId}/type/${ticketType}/buy`, body);
             return response.data;
         } catch (e) {

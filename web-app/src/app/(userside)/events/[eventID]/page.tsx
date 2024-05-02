@@ -24,10 +24,10 @@ async function Page({ params }: Props) {
     const fetchedEvent: IEventGetRes = await getEvent(params.eventID);
 
     return (
-        <Box className={'mt-10 flex gap-20 p-10 h-[50rem]'}>
+        <Box className={'mt-10 flex gap-20 p-10 min-h-[50rem]'}>
             <div className={'w-1/3 p-0 flex'}>
                 <img
-                    className={'rounded-lg object-cover'}
+                    className={'rounded-lg object-cover max-h-[50rem]'}
                     src={fetchedEvent.poster}
                     alt={'Poster'}
                 />
