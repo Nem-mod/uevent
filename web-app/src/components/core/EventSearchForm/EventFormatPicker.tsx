@@ -39,7 +39,7 @@ function EventFormatPicker({ title }: Props) {
     return (
         <Popover placement="bottom-start" showArrow={true}>
             <PopoverTrigger>
-                <div className={'flex items-center'}>
+                <div className={'flex items-center cursor-pointer'}>
                     <span className={'px-2 font-mono text-xl'}>{title || 'Formats'}</span>
                     <ChevronDownIcon fontSize={20} />
                 </div>

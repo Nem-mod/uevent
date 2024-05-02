@@ -14,7 +14,7 @@ interface CardTypes {
 
 function EventCard({title, start, format, location, themes, img, href}: CardTypes) {
     return (
-        <Link href={href} className={''}>
+        <Link href={href} className={'w-96'}>
             <div className={'border-gray/70 flex flex-row rounded-xl border-2 shadow-xl h-40 w-96 '}>
                 <div className={'flex w-1/3'}>
                     <img className={'object-cover rounded-l-xl'} src={img} alt="This is an image"/>

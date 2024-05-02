@@ -24,7 +24,7 @@ async function Page({ params }: Props) {
     const fetchedEvent: IEventGetRes = await getEvent(params.eventID);
 
     return (
-        <Box className={'mt-20 flex gap-20 p-10'}>
+        <Box className={'mt-10 flex gap-20 p-10 h-[50rem]'}>
             <div className={'w-1/3 p-0 flex'}>
                 <img
                     className={'rounded-lg object-cover'}
@@ -57,7 +57,9 @@ async function Page({ params }: Props) {
                             {fetchedEvent.duration} min
                         </span>
                             <div className={'p-1 px-2 rounded-xl bg-secondary/20 w-fit'}>
-                                <Link className={'text-bold text-lg text-black'}>
+                                <Link
+                                    href={`/events/?format=${fetchedEvent.format.id}`}
+                                    className={'text-bold text-lg text-black'}>
                                     {fetchedEvent.format.name}
                                 </Link>
                             </div>
@@ -65,7 +67,10 @@ async function Page({ params }: Props) {
                                 {fetchedEvent.themes.map(theme => {
                                     return (
                                         <div className={'p-1 px-2 rounded-xl bg-secondary/20'}>
-                                            <Link className={'text-bold text-lg text-black'}>
+                                            <Link
+                                                isDisabled
+                                                className={'text-bold text-lg text-black'}
+                                            >
                                                 {theme.name}
                                             </Link>
                                         </div>

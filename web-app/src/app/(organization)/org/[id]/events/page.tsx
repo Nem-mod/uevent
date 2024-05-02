@@ -77,7 +77,9 @@ function Page() {
                 <TableHeader columns={columns}>
                     {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                 </TableHeader>
-                <TableBody items={events}>
+                <TableBody items={events.map(event => {
+                    return {...event, startTime: new Date(event.startTime).toString()}
+                })}>
                     {(item) => (
                         <TableRow
                             href={`/org/${orgID}/events/${item.id}`}

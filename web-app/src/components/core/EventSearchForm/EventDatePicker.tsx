@@ -28,9 +28,9 @@ function EventDatePicker({ title }: Props) {
         replace(`${pathname}?${params.toString()}`);
     };
     return (
-        <Popover placement="bottom-start" showArrow={true}>
+        <Popover className={''} placement="bottom-start" showArrow={true}>
             <PopoverTrigger>
-                <div className={'flex items-center'}>
+                <div className={'flex items-center cursor-pointer'}>
                     <span className={'px-2 font-mono text-xl'}>{title || '16.04.2024'}</span>
                     <ChevronDownIcon fontSize={20} />
                 </div>

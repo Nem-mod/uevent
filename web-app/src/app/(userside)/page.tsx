@@ -24,7 +24,7 @@ async function fetchEvents(): Promise<IEventsGetWithPagination> {
     return { count: 0, data: [] };
 }
 
-async function fetchFormats(): Promise<IEventFormat[]> {
+async function fetchFormats(): Promise<IEventFormat[] | undefined> {
     try {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/event/formats`,
@@ -36,7 +36,7 @@ async function fetchFormats(): Promise<IEventFormat[]> {
     } catch (error) {
         console.log(error)
     }
-    return {};
+    return undefined;
 }
 
 export default async function Home() {
@@ -66,7 +66,7 @@ export default async function Home() {
                 </div>
 
                 <div className={'mt-5 flex flex-col gap-20 justify-center'}>
-                    {formats.map(format => (<FormatEventsList name={format.name} formatId={format.id}/>))}
+                    {formats?.map(format => (<FormatEventsList name={format.name} formatId={format.id}/>))}
                 </div>
                 <div className={'mt-12 grid w-full place-items-center'}>
                     <Button
