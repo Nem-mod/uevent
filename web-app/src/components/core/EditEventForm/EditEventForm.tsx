@@ -28,12 +28,14 @@ function EditEventForm({ fetchedEvent }: Props) {
     const [isEdit, setIsEdit] = useState(false);
 
 
-    // TODO: ADD LOGIC
-    const handleDelete = () => {
 
+    const handleDelete = async (e) => {
+        e.preventDefault()
+        eventService.deleteEvent(fetchedEvent.id).then(res => {
+            router.replace(`/org/${organizationId}/events`)
+        }).catch();
     };
 
-    // TODO: ADD LOGIC
     const handleSubmitEdit = async () => {
         const event: IUpdateEvent = {
             id: Number(fetchedEvent.id),

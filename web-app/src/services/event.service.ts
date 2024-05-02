@@ -28,6 +28,14 @@ export const eventService = {
         } catch (e) {
             console.log(e);
         }
+    },
+
+    async deleteEvent(eventId: number | string): Promise<void> {
+        try {
+            await axiosWithAuth.delete(`/event/${eventId}`)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
 

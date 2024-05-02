@@ -19,7 +19,7 @@ function EventCard({title, start, format, location, themes, img, href}: CardType
                 <div className={'flex w-1/3'}>
                     <img className={'object-cover rounded-l-xl'} src={img} alt="This is an image"/>
                 </div>
-                <div className={'flex flex-col bg-transparent py-2 pl-8 pr-20 w-2/3 justify-around'}>
+                <div className={'flex flex-col bg-transparent py-2 pl-8 w-2/3 justify-around'}>
                     {/*<div className={'my-2 flex flex-col'}>*/}
                         <span className={'text-l font-bold text-black text-xl'}>{title}</span>
                     {/*</div>*/}

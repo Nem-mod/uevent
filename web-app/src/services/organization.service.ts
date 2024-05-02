@@ -23,7 +23,7 @@ export const organizationService = {
 
     async getAllOrgEvents(id: number): Promise<IEventsGetWithPagination> {
         try {
-            const response = await axiosWithAuth.get(`/event/organization/${id}`);
+            const response = await axiosWithAuth.get(`/event/organization/${id}?offset=30`);
             return response.data;
         } catch (e) {
             throw new Error('Get some bitches dude')

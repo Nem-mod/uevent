@@ -79,7 +79,7 @@ function Page() {
             tickets: tickets
         }
         const res = await eventService.createEvent(data, organizationId);
-        // router.push('/');
+        // router.replace(`/org/${organizationId}/events`);
         console.log(data)
     };
 
