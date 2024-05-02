@@ -39,6 +39,7 @@ function Page() {
     const [description, setDescription] = useState<string>();
     const [startTime, setStartTime] = useState<ZonedDateTime>(now(getLocalTimeZone()));
     const [duration, setDuration] = useState<number>(1);
+    const [location, setLocation] = useState('');
     const [format, setFormat] = useState<number>();
     const [themes, setThemes] = useState<Set<number>>();
     const [tickets, setTickets] = useState<ICreateEventTicket[]>();
@@ -71,6 +72,7 @@ function Page() {
             description: description,
             startTime: startTime.toString(),
             duration: duration,
+            location: location,
             format: {id: format, name: ''},
             themes: themesArray.map(e => {
                 return {id: e, name: ''}
@@ -136,6 +138,17 @@ function Page() {
                                 color={'primary'}
                                 value={`${duration}`}
                                 onChange={e => setDuration(+e.target.value)}
+                            />
+
+                            <Input
+                                type={'text'}
+                                label={'Location event take place at'}
+                                size={'lg'}
+                                radius={'sm'}
+                                variant={'underlined'}
+                                color={'primary'}
+                                value={`${location}`}
+                                onChange={e => setLocation(e.target.value)}
                             />
 
                             <Select
