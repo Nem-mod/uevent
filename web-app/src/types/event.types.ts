@@ -44,12 +44,12 @@ export interface IEventsGetWithPagination {
 export interface ICreateEventAndTickets {
     title: string;
     description: string;
-    format: IEventFormat // | number;
-    themes: IEventTheme[] // | number[];
+    format: number // | number;
+    themes: number[] // | number[];
     startTime: string;
     duration: number; // s? ms? m? h?
     poster: string; // url to event poster
-    location?: string;
+    locationStr: string;
     tickets?: ICreateEventTicket[];
 }
 

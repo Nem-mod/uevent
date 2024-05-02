@@ -70,18 +70,17 @@ function Page() {
         const data: ICreateEventAndTickets = {
             title: title,
             description: description,
-            startTime: startTime.toString(),
+            startTime: startTime.toDate().toISOString(),
             duration: duration,
-            location: location,
-            format: {id: format, name: ''},
-            themes: themesArray.map(e => {
-                return {id: e, name: ''}
-            }),
+            locationStr: location,
+            format: format,
+            themes: themesArray,
             poster: imgURL,
             tickets: tickets
         }
         const res = await eventService.createEvent(data, organizationId);
-        router.push('/');
+        // router.push('/');
+        console.log(data)
     };
 
     return (
