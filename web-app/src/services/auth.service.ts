@@ -50,4 +50,29 @@ export const authService = {
         }
     },
 
+    async sendRecoverPassword(email: string) {
+        try {
+            const body = {
+                email: email,
+                returnLink: `${process.env.NEXT_PUBLIC_HOST_SERVER_URL}/reset-password/?token=replaceToken`
+            }
+            const response = await axiosWithoutAuth.post(`/auth/user/send/reset-psw`, body);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    },
+
+    async resetPassword(token: string, password: string) {
+        try {
+            const body = {
+                token: token,
+                password: password
+            }
+            const response = await axiosWithoutAuth.patch(`/auth/user/validate/reset-psw`, body);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
 };

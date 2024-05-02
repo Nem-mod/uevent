@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@nextui-org/button';
 import InputFormText from '@/components/auth/InputFormText/InputFormText';
 import {Link} from "@nextui-org/react";
+import { authService } from '@/services/auth.service';
 
 type FormValues = {
     email: string;
@@ -26,15 +27,16 @@ function Page() {
     } = useForm<FormValues>({ resolver: zodResolver(schema) });
 
     const [recoverySent, setRecoverySent] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     // TODO: ADD LOGIC
-    const submitRecovery = (data: FormValues) => {
-        console.log(data);
-        setRecoverySent(true);
+    const submitRecovery = async (data: FormValues) => {
+        const res = await authService.sendRecoverPassword(data.email);
+        setSuccess(true)
     };
 
     return (
-        <div className={'flex max-w-screen'}>
+        <div className={'flex max-w-screen mt-10'}>
             <Box className={'flex flex-col mx-auto mt-unit-4xl p-12 w-2/5'}>
                 <h1
                     className={'text-black font-bold text-4xl mb-4'}
@@ -64,7 +66,9 @@ function Page() {
                         className={'w-4/5 mr-auto'}
                         type={'text'} register={register} name={'email'} label={'Email'}
                     />
-
+                    {success && (
+                        <span>We send you recovery link to email</span>
+                    )}
                     <Button
                         className={
                             'm-auto mt-4 h-12 border border-primary bg-accent text-white hover:bg-accent ' +
@@ -72,7 +76,7 @@ function Page() {
                         }
                         type="submit"
                     >
-                        Next
+                        Send
                     </Button>
                 </form>
             </Box>

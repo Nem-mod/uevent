@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import  { useState } from 'react';
 import Box from '@/components/utils/Box/Box';
 import { Button, Link } from '@nextui-org/react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from '@nextui-org/react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/auth.service';
-import { IUserRegisterAndAuthRes } from '@/types/user.types';
 import { useUserProvider } from '@/providers/UserProvider';
 
 function Page() {
@@ -15,7 +14,7 @@ function Page() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const router = useRouter();
     const [user, setUser] = useUserProvider();
-
+    const [sentResetPass, setSentResetPass] = useState(false);
     const handleDelete = () => {
         console.log('Account deleted');
         router.replace('/');
@@ -29,6 +28,13 @@ function Page() {
             router.push('/');
         })
     };
+
+    const handleResetPassword = async () => {
+        if (!user?.email)
+            return;
+        const res = authService.sendRecoverPassword(user?.email)
+        setSentResetPass(true)
+    }
     const columns = [
         {
             key: 'title',
@@ -106,16 +112,7 @@ function Page() {
                         >
                             Edit profile
                         </Button>
-                        {/*<Button*/}
-                        {/*    onPress={onOpen}*/}
-                        {/*    color={'danger'}*/}
-                        {/*    className={*/}
-                        {/*        'mt-auto ml-auto h-12 text-white ' +*/}
-                        {/*        'w-fit text-lg font-semibold hover:border-accent hover:text-white'*/}
-                        {/*    }*/}
-                        {/*>*/}
-                        {/*    Delete Account*/}
-                        {/*</Button>*/}
+
                         <Button
                             onClick={handleLogOut}
                             color={'danger'}
@@ -126,6 +123,21 @@ function Page() {
                         >
                             Log out
                         </Button>
+
+                        <Button
+                            onPress={handleResetPassword}
+                            color={'danger'}
+                            className={
+                                'mt-auto ml-auto h-12 text-white ' +
+                                'w-fit text-lg font-semibold hover:border-accent hover:text-white'
+                            }
+                        >
+                            Reset Password
+                        </Button>
+                        {sentResetPass && (
+                            <span className={'text-black text-xl'}>We sent reset password link to your email</span>
+                        )}
+
                         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                             <ModalContent>
                                 {(onClose) => (
