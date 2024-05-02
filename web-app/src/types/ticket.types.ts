@@ -3,6 +3,7 @@ export interface ITicket {
     eventId: number;
     type: string;
     cost: number;
+    description?: string
 }
 
 export interface ITicketsPaginated {
