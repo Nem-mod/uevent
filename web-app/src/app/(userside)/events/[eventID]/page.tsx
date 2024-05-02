@@ -79,7 +79,7 @@ async function Page({ params }: Props) {
                         <span className={'text-lg text-black text-pretty'}>{fetchedEvent.description}</span></div>
                 </div>
                 <div className={'basis-2/5'}>
-                    <BuyTicketForm ticketTypes={fetchedEvent.ticketsStatistic} />
+                    <BuyTicketForm ticketTypes={fetchedEvent.ticketsStatistic} eventId={fetchedEvent.id} />
                 </div>
             </div>
         </Box>
