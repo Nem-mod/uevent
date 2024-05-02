@@ -9,9 +9,9 @@ function Page() {
                 <Box className={'flex-grow basis-1/2 justify-center bg-accent/15'}>
                     <RegisterOrgForm />
                 </Box>
-                <div className={'flex-grow basis-1/2'}>
-                    <h1 className={'text-xl font-bold text-black'}>Now you have</h1>
-                    <p className={'text-black'}>No bitches lmao</p>
+                <div className={'mt-6 flex flex-col gap-6 flex-grow basis-1/2'}>
+                    <h1 className={'text-4xl font-semibold text-black'}>Ready to take your organization to the next level?</h1>
+                    <p className={'text-2xl text-black'}>Create a new account and elevate your team's efficiency and collaboration. Whether you're managing events, projects, or teams, our platform offers the tools you need to succeed. Let's build something great together!</p>
                 </div>
             </div>
         </div>

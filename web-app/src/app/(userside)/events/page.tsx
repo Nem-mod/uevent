@@ -59,7 +59,7 @@ export default async function Page({ params, searchParams }: Props) {
                     </div>
                 </div>
             )}
-            {JSON.stringify(searchParams)}
+            {/*{JSON.stringify(searchParams)}*/}
         </div>
     );
 }

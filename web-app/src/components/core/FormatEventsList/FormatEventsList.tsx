@@ -33,10 +33,10 @@ async function FormatEventsList({name, formatId}: Props) {
     console.log(events)
 
     return (
-        <Box>
+        <div>
             <span className={'text-black text-semibold text-4xl'}>{name}</span>
             <div className={'mt-10 flex gap-4 flex-wrap gap-6'}>
-                {events.data && events.data.map(event => (
+                {events.data.length ? (events.data.map(event => (
                     <EventCard
                         title={event.title}
                         start={new Date(event.startTime)}
@@ -46,9 +46,11 @@ async function FormatEventsList({name, formatId}: Props) {
                         href={`/events/${event.id}`}
                         img={event.poster}
                     />)
+                )) : (
+                    <span className={'text-gray-100 font-semibold text-6xl'}>No events in this verse yet</span>
                 )}
             </div>
-        </Box>
+        </div>
     );
 }
 
