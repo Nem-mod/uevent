@@ -52,4 +52,9 @@ export const ticketService = {
         const response = await axiosWithoutAuth.patch(`/tickets/compost`, body);
         return response.data;
     },
+
+    async getUsersTickets() {
+        const response = await axiosWithAuth.get('/tickets/user/me');
+        return response.data;
+    }
 };

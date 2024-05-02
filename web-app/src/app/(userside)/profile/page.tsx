@@ -1,6 +1,6 @@
 'use client';
 
-import  { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@/components/utils/Box/Box';
 import { Button, Link } from '@nextui-org/react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from '@nextui-org/react';
@@ -8,6 +8,14 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/auth.service';
 import { useUserProvider } from '@/providers/UserProvider';
+import { ticketService } from '@/services/ticket.service';
+
+export enum TicketStatus {
+    AVAILABLE,
+    PROCESSING,
+    SOLD,
+    COMPOSTED,
+}
 
 function Page() {
 
@@ -15,6 +23,19 @@ function Page() {
     const router = useRouter();
     const [user, setUser] = useUserProvider();
     const [sentResetPass, setSentResetPass] = useState(false);
+    const [tickets, setTickets] = useState();
+
+    useEffect(() => {
+        ticketService.getUsersTickets().then(res => {
+            console.log(res);
+            setTickets(res.data.map((item: any) => {
+                return {
+                    ...item,
+                    status: TicketStatus[item.status]
+                }
+            }));
+        });
+    }, [])
     const handleDelete = () => {
         console.log('Account deleted');
         router.replace('/');
@@ -26,57 +47,34 @@ function Page() {
                 setUser(null);
             }
             router.push('/');
-        })
+        });
     };
 
     const handleResetPassword = async () => {
         if (!user?.email)
             return;
-        const res = authService.sendRecoverPassword(user?.email)
-        setSentResetPass(true)
-    }
+        const res = authService.sendRecoverPassword(user?.email);
+        setSentResetPass(true);
+    };
+
     const columns = [
         {
-            key: 'title',
+            key: 'type',
             label: 'TITLE',
         },
         {
-            key: 'startDate',
-            label: 'START DATE',
+            key: 'description',
+            label: 'Description',
         },
         {
-            key: 'location',
-            label: 'LOCATION',
+            key: 'status',
+            label: 'Status',
+        },
+        {
+            key: 'cost',
+            label: 'Cost',
         },
     ];
-
-    const tickets = [
-        {
-            id: '1',
-            title: 'All bitches here',
-            startDate: new Date().toDateString(),
-            location: 'London is the capital of Great Britain',
-        },
-        {
-            id: '2',
-            title: 'No bitches D:',
-            startDate: new Date().toDateString(),
-            location: 'London is the capital of Great Britain',
-        },
-        {
-            id: '3',
-            title: 'Still no bitches',
-            startDate: new Date().toDateString(),
-            location: 'London is the capital of Great Britain',
-        },
-        {
-            id: '4',
-            title: 'Nigga balls',
-            startDate: new Date().toDateString(),
-            location: 'London is the capital of Great Britain',
-        },
-    ];
-
 
     return (
         <div className={'p-10 grid place-items-center'}>
@@ -169,24 +167,29 @@ function Page() {
                     <span className={'text-5xl font-extrabold text-black'}>
                 Purchase history:
             </span>
-                    <Table aria-label='Purchase history'>
-                        <TableHeader columns={columns}>
-                            {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-                        </TableHeader>
-                        <TableBody items={tickets}>
-                            {(item) => (
-                                <TableRow
-                                    key={item.id}
-                                >
-                                    {(columnKey) => <TableCell
-                                        className={'text-black'}
+                    {tickets && (
+
+                        <Table aria-label='Purchase history'>
+                            <TableHeader columns={columns}>
+                                {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+                            </TableHeader>
+                            <TableBody items={tickets}>
+                                {(item: any) => (
+                                    <TableRow
+                                        key={item.id}
                                     >
-                                        {getKeyValue(item, columnKey)}
-                                    </TableCell>}
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
+                                        {(columnKey) => <TableCell
+                                            key={item.id + getKeyValue(item, columnKey)}
+                                            className={'text-black'}
+                                        >
+                                            {getKeyValue(item, columnKey)}
+                                        </TableCell>}
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    )}
+
                 </Box>
             )}
         </div>
